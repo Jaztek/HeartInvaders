@@ -1,0 +1,161 @@
+{
+    "stagesList": [
+        {
+            "stage": 0,
+            "fireRate": 2.5,
+            "maxScore": 5,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 100
+                }
+            ]
+        },
+        {
+            "stage": 1,
+            "fireRate": 2.0,
+            "maxScore": 15,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 50
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 50
+                }
+            ]
+        },
+        {
+            "stage": 2,
+            "fireRate": 1.7,
+            "maxScore": 30,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 20
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 40
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 40
+                }
+            ]
+        },
+        {
+            "stage": 3,
+            "fireRate": 1.4,
+            "maxScore": 50,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 30
+                }
+            ]
+        },
+        {
+            "stage": 4,
+            "fireRate": 1.2,
+            "maxScore": 60,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 20
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 30
+                }
+            ]
+        },
+        {
+            "stage": 5,
+            "fireRate": 1,
+            "maxScore": 70,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 5
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 20
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 25
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 10
+                }
+            ]
+        },
+        {
+            "stage": 6,
+            "fireRate": 0.5,
+            "maxScore": 3000,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 5
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 15
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 15
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 45
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 10
+                }
+            ]
+        }
+    ]
+}

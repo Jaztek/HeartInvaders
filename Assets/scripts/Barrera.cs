@@ -1,27 +1,103 @@
 ﻿using UnityEngine;
 using System.Collections;
-/*
-    Novithian
-    04/25/2016
-*/
+
 public class Barrera : MonoBehaviour
 {
     public float radius = 2f;      //Distance from the center of the circle to the edge
+    public GameObject barreraAzul;
+    public GameObject barreraRoja;
+
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 vectorCamera = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 vectorZero = new Vector2(0, 0);
+        /*
+        Para el pc---
 
-        float currentAngle = Quaternion.FromToRotation(Vector3.up, vectorCamera - vectorZero).eulerAngles.z;
-        currentAngle = currentAngle + 90;
+        Vector3 vectorCameraM = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        print(vectorCameraM.y);
+        float normalYM = vectorCameraM.y + 3.5f;
+        float normalAngleM = normalYM * 180 / 7;
+        float currentAngleM = normalAngleM + 270;
+
+        Vector2 movementM = Vector2.up;
+        print(currentAngleM + "   Angulo");
+        movementM.x = 1 * Mathf.Cos(currentAngleM * Mathf.PI / 180) * radius;
+        movementM.y = 1 * Mathf.Sin(currentAngleM * Mathf.PI / 180) * radius;
+        barreraAzul.transform.position = movementM;
+
+        barreraAzul.transform.eulerAngles = new Vector3(barreraAzul.transform.rotation.x, barreraAzul.transform.rotation.y, currentAngleM + 90);
+         */
+
+
+        if (Input.touchCount > 0)
+        {
+
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Vector3 vectorCamera = Camera.main.ScreenToWorldPoint(touch.position);
+
+                if (vectorCamera.x < 0) { moveBlueBarrera(vectorCamera); }
+                else { moveRedBarrera(vectorCamera); }
+            }
+
+            if (Input.touchCount > 1 && Input.GetTouch(1).phase == TouchPhase.Moved)
+            {
+                Touch touch2 = Input.GetTouch(1);
+                Vector3 vectorCamera = Camera.main.ScreenToWorldPoint(touch2.position);
+
+                if (vectorCamera.x < 0) { moveBlueBarrera(vectorCamera); }
+                else { moveRedBarrera(vectorCamera); }
+            }
+        }
+    }
+
+
+    private void moveBlueBarrera(Vector3 vectorCamera)
+    {
+        if (vectorCamera.y < -2.5f)
+        {
+            vectorCamera.y = -2.5f;
+        }
+        else if (vectorCamera.y > 2.5f)
+        {
+            vectorCamera.y = 2.5f;
+        }
+        float normalY = vectorCamera.y + 2.5f;
+        float normalAngle = normalY * 180 / 5;
+        float currentAngle = -normalAngle + 270;
 
         Vector2 movement = Vector2.up;
         movement.x = 1 * Mathf.Cos(currentAngle * Mathf.PI / 180) * radius;
         movement.y = 1 * Mathf.Sin(currentAngle * Mathf.PI / 180) * radius;
-        transform.position = movement;
+        barreraAzul.transform.position = movement;
 
-        transform.eulerAngles = new Vector3(transform.rotation.x, transform.rotation.y, currentAngle + 90);
+        barreraAzul.transform.eulerAngles = new Vector3(barreraAzul.transform.rotation.x, barreraAzul.transform.rotation.y, currentAngle + 90);
+
+    }
+
+    private void moveRedBarrera(Vector3 vectorCamera)
+    {
+          if (vectorCamera.y < -2.5f)
+        {
+            vectorCamera.y = -2.5f;
+        }
+        else if (vectorCamera.y > 2.5f)
+        {
+            vectorCamera.y = 2.5f;
+        }
+        float normalY = vectorCamera.y + 2.5f;
+        float normalAngle = normalY * 180 / 5;
+        float currentAngle = normalAngle + 270;
+
+        Vector2 movement = Vector2.up;
+        movement.x = 1 * Mathf.Cos(currentAngle * Mathf.PI / 180) * radius;
+        movement.y = 1 * Mathf.Sin(currentAngle * Mathf.PI / 180) * radius;
+        barreraRoja.transform.position = movement;
+
+        barreraRoja.transform.eulerAngles = new Vector3(barreraRoja.transform.rotation.x, barreraRoja.transform.rotation.y, currentAngle + 90);
+
     }
 }
