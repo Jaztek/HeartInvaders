@@ -13,21 +13,19 @@ public class Barrera : MonoBehaviour
     {
         /*
         Para el pc---
-
         Vector3 vectorCameraM = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        print(vectorCameraM.y);
         float normalYM = vectorCameraM.y + 3.5f;
         float normalAngleM = normalYM * 180 / 7;
         float currentAngleM = normalAngleM + 270;
 
         Vector2 movementM = Vector2.up;
-        print(currentAngleM + "   Angulo");
         movementM.x = 1 * Mathf.Cos(currentAngleM * Mathf.PI / 180) * radius;
         movementM.y = 1 * Mathf.Sin(currentAngleM * Mathf.PI / 180) * radius;
         barreraAzul.transform.position = movementM;
 
         barreraAzul.transform.eulerAngles = new Vector3(barreraAzul.transform.rotation.x, barreraAzul.transform.rotation.y, currentAngleM + 90);
-         */
+*/
+
 
 
         if (Input.touchCount > 0)
@@ -57,16 +55,16 @@ public class Barrera : MonoBehaviour
 
     private void moveBlueBarrera(Vector3 vectorCamera)
     {
-        if (vectorCamera.y < -2.5f)
+        if (vectorCamera.y < -1.5f)
         {
-            vectorCamera.y = -2.5f;
+            vectorCamera.y = -1.5f;
         }
-        else if (vectorCamera.y > 2.5f)
+        else if (vectorCamera.y > 1.5f)
         {
-            vectorCamera.y = 2.5f;
+            vectorCamera.y = 1.5f;
         }
-        float normalY = vectorCamera.y + 2.5f;
-        float normalAngle = normalY * 180 / 5;
+        float normalY = vectorCamera.y + 1.5f;
+        float normalAngle = normalY * 180 / 3;
         float currentAngle = -normalAngle + 270;
 
         Vector2 movement = Vector2.up;
@@ -80,16 +78,16 @@ public class Barrera : MonoBehaviour
 
     private void moveRedBarrera(Vector3 vectorCamera)
     {
-          if (vectorCamera.y < -2.5f)
+        if (vectorCamera.y < -1.5f)
         {
-            vectorCamera.y = -2.5f;
+            vectorCamera.y = -1.5f;
         }
-        else if (vectorCamera.y > 2.5f)
+        else if (vectorCamera.y > 1.5f)
         {
-            vectorCamera.y = 2.5f;
+            vectorCamera.y = 1.5f;
         }
-        float normalY = vectorCamera.y + 2.5f;
-        float normalAngle = normalY * 180 / 5;
+        float normalY = vectorCamera.y + 1.5f;
+        float normalAngle = normalY * 180 / 3;
         float currentAngle = normalAngle + 270;
 
         Vector2 movement = Vector2.up;

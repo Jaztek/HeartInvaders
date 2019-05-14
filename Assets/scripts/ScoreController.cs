@@ -32,14 +32,14 @@ public class ScoreController : MonoBehaviour, IPointerClickHandler
 
     public void scored(){
             count = count + (cant * multi);
-            this.GetComponent<Text>().text = (count).ToString("00000000");
+            this.GetComponent<Text>().text = (count).ToString("0000000");
     }
 
     public long getScore(){
         return count;
     }
 
-    public void restart(){
+    public void restartScore(){
         count = 0;
         scored();
     }

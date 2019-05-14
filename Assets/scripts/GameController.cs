@@ -11,6 +11,10 @@ public class GameController : MonoBehaviour
     public GameObject heart;
     public GameObject log;
     public GameObject popup;
+    public MainController main;
+    public GameObject tutoCanvas;
+    public GameObject stageCanvas;
+
 
     public float nextFire = 2;
     public float fireRate = 2;
@@ -26,7 +30,6 @@ public class GameController : MonoBehaviour
     {
         scoreController = score.GetComponentInChildren<ScoreController>();
         getStagesPlattform();
-        //getStages();
     }
 
 
@@ -64,7 +67,6 @@ public class GameController : MonoBehaviour
         }
         return path;
     }
-    
     private Vector3 randomPosition()
     {
         var x = randomPositionX();
@@ -72,7 +74,8 @@ public class GameController : MonoBehaviour
         //new Vector3(x, y)
         return new Vector3(x, y);
     }
-    private int randomPositionY(int x) {
+    private int randomPositionY(int x)
+    {
         if ((x >= -6 && x <= 6))
         {
             var y = Random.Range(0, 2);
@@ -104,9 +107,10 @@ public class GameController : MonoBehaviour
         }
         return x;
     }
+
+
+
     ///////////////////////////// ---- Functions ----///////////////////////////////////////////
-
-
 
     public void scored()
     {
@@ -121,6 +125,7 @@ public class GameController : MonoBehaviour
         if (scoreController.getScore() >= currentStage.maxScore && stages.stagesList.Length >= currentStage.stage + 1)
         {
             currentStage = stages.stagesList[currentStage.stage + 1];
+            instaciateStageUI(currentStage.stage);
         }
     }
 
@@ -137,14 +142,35 @@ public class GameController : MonoBehaviour
     {
         gameOver = true;
         popup.SetActive(true);
-        popup.GetComponent<PopupScore>().setData(scoreController.getScore().ToString("00000000"), currentStage.stage.ToString());
+        popup.GetComponent<PopupScore>().setData(scoreController.getScore().ToString("0000000"), currentStage.stage.ToString());
     }
     public void restart()
     {
         loadStage();
         heart.GetComponent<Heart>().restart();
-        scoreController.restart();
-        gameOver = false;
+        scoreController.restartScore();
+
+        if (currentStage.stage == 0)
+        {
+            tutoCanvas.SetActive(true);
+        }
+        StartCoroutine("delayStartGame");
+
+
+    }
+
+
+
+    IEnumerator delayStartGame()
+    {
+        for (; ; )
+        {
+            yield return new WaitForSeconds(4f);
+            gameOver = false;
+            instaciateStageUI(currentStage.stage);
+            break;
+        }
+
     }
 
     public void getStagesPlattform()
@@ -158,4 +184,18 @@ public class GameController : MonoBehaviour
         currentStage = stages.stagesList[0];
 
     }
+
+    public void backToMenu()
+    {
+        heart.GetComponent<Heart>().restart();
+        main.backToMenu(scoreController.getScore(), currentStage.stage);
+    }
+
+    public void instaciateStageUI(int stage)
+    {
+        GameObject stageUI = Instantiate(stageCanvas, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        stageUI.transform.SetParent(GameObject.FindGameObjectWithTag("stageCanvas").transform, false);
+        stageUI.GetComponent<Text>().text = "Stage:" + stage;
+    }
 }
+

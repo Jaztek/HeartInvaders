@@ -2,8 +2,8 @@
     "stagesList": [
         {
             "stage": 0,
-            "fireRate": 2.5,
-            "maxScore": 5,
+            "fireRate": 1.3,
+            "maxScore": 10,
             "bullets": [
                 {
                     "path": "Red/Big",
@@ -13,8 +13,8 @@
         },
         {
             "stage": 1,
-            "fireRate": 2.0,
-            "maxScore": 15,
+            "fireRate": 1.2,
+            "maxScore": 30,
             "bullets": [
                 {
                     "path": "Red/Big",
@@ -28,8 +28,8 @@
         },
         {
             "stage": 2,
-            "fireRate": 1.7,
-            "maxScore": 30,
+            "fireRate": 1.1,
+            "maxScore": 50,
             "bullets": [
                 {
                     "path": "Red/Big",
@@ -47,8 +47,8 @@
         },
         {
             "stage": 3,
-            "fireRate": 1.4,
-            "maxScore": 50,
+            "fireRate": 1,
+            "maxScore": 80,
             "bullets": [
                 {
                     "path": "Red/Big",
@@ -70,8 +70,8 @@
         },
         {
             "stage": 4,
-            "fireRate": 1.2,
-            "maxScore": 60,
+            "fireRate": 1,
+            "maxScore": 120,
             "bullets": [
                 {
                     "path": "Red/Big",
@@ -98,7 +98,7 @@
         {
             "stage": 5,
             "fireRate": 1,
-            "maxScore": 70,
+            "maxScore": 150,
             "bullets": [
                 {
                     "path": "Red/Big",
@@ -128,6 +128,121 @@
         },
         {
             "stage": 6,
+            "fireRate": 0.5,
+            "maxScore": 180,
+            "bullets": [
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 20
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 40
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 10
+                }
+            ]
+        },
+        {
+            "stage": 7,
+            "fireRate": 0.2,
+            "maxScore": 220,
+            "bullets": [
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 100
+                }
+            ]
+        },
+        {
+            "stage": 8,
+            "fireRate": 0.5,
+            "maxScore": 250,
+            "bullets": [
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 15
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 60
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 15
+                }
+            ]
+        },
+        {
+            "stage": 9,
+            "fireRate": 0.5,
+            "maxScore": 280,
+            "bullets": [
+                {
+                    "path": "Blue/Big",
+                    "probabilidad": 80
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 20
+                }
+            ]
+        },
+        {
+            "stage": 10,
+            "fireRate": 0.5,
+            "maxScore": 330,
+            "bullets": [
+                {
+                    "path": "Blue/Big",
+                    "probabilidad": 60
+                },
+                {
+                    "path": "Blue/Med",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 10
+                }
+            ]
+        }
+        ,
+        {
+            "stage": 11,
+            "fireRate": 0.8,
+            "maxScore": 400,
+            "bullets": [
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 50
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Blue/Sml",
+                    "probabilidad": 20
+                }
+            ]
+        },
+        {
+            "stage": 999,
             "fireRate": 0.5,
             "maxScore": 3000,
             "bullets": [

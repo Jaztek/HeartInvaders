@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Exit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public MainController mainController;
+    public GameController gameController;
 
     private Button butt;
 
@@ -17,7 +17,7 @@ public class Exit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        mainController.restart();
+        gameController.backToMenu();
     }
 
     //Detect if clicks are no longer registering
@@ -25,5 +25,5 @@ public class Exit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         //Debug.Log(name + "No longer being clicked");
     }
-    
+
 }

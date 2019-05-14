@@ -26,7 +26,6 @@ public class StartGame : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Detect if clicks are no longer registering
     public void OnPointerUp(PointerEventData pointerEventData)
     {
-        //Debug.Log(name + "No longer being clicked");
     }
 
 }
