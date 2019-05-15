@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ScoreController : MonoBehaviour, IPointerClickHandler
 {
-    public Home home;
-    public float vel = 0.2f;
+   
     public int cant = 1;
     public int multi = 1;
     
@@ -22,7 +21,7 @@ public class ScoreController : MonoBehaviour, IPointerClickHandler
     {
         for (; ; )
         {
-            
+            float vel = 0.2f;
             yield return new WaitForSeconds(vel);
         }
     }
@@ -33,11 +32,16 @@ public class ScoreController : MonoBehaviour, IPointerClickHandler
 
     public void scored(){
             count = count + (cant * multi);
-            this.GetComponent<Text>().text = (count).ToString("00000000");
+            this.GetComponent<Text>().text = (count).ToString("0000000");
     }
 
     public long getScore(){
         return count;
+    }
+
+    public void restartScore(){
+        count = 0;
+        scored();
     }
 
     

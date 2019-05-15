@@ -7,14 +7,21 @@ public class Shot : MonoBehaviour
 
     private Rigidbody2D rigidbody;
     public int speed = 50;
-    private Home homeController;
+    private GameController gameController;
+
+    public Sprite[] sprites;
+    private SpriteRenderer spriteRenderer;
 
 
     // Use this for initialization
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        homeController = GameObject.FindWithTag("GameController").GetComponent<Home>();
+        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprites[0];
+        StartCoroutine("spriteChange");
     }
 
     // Update is called once per frame
@@ -29,11 +36,35 @@ public class Shot : MonoBehaviour
         if (other.CompareTag("barrera"))
         {
             Destroy(this.gameObject);
-            homeController.scored();
+            gameController.scored();
         }
         if (other.CompareTag("Player"))
         {
             Destroy(this.gameObject);
+            gameController.damage();
+        }
+    }
+
+
+    public void start()
+    {
+        StartCoroutine("counter");
+    }
+
+    IEnumerator spriteChange()
+    {
+        for (; ; )
+        {
+            if (spriteRenderer.sprite == sprites[0])
+            {
+                spriteRenderer.sprite = sprites[1];
+
+            }
+            else
+            {
+                spriteRenderer.sprite = sprites[0];
+            }
+            yield return new WaitForSeconds(0.4f);
         }
     }
 }
