@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public MainController main;
     public GameObject tutoCanvas;
     public GameObject stageCanvas;
+    public GameObject kaboom;
 
 
     public float nextFire = 2;
@@ -159,8 +160,6 @@ public class GameController : MonoBehaviour
 
     }
 
-
-
     IEnumerator delayStartGame()
     {
         for (; ; )
@@ -195,7 +194,15 @@ public class GameController : MonoBehaviour
     {
         GameObject stageUI = Instantiate(stageCanvas, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         stageUI.transform.SetParent(GameObject.FindGameObjectWithTag("stageCanvas").transform, false);
-        stageUI.GetComponent<Text>().text = "Stage:" + stage;
+        stageUI.GetComponent<stageCanvas>().setText(stage.ToString());
+    }
+
+    public void boom()
+    {
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+        camera.GetComponent<CameraController>().triggerShake();
+        GameObject kaboomInst = Instantiate(kaboom,  new Vector3(0, 0, 0), Quaternion.identity);
+        kaboomInst.transform.SetParent(heart.transform.parent);
     }
 }
 

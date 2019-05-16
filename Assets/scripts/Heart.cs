@@ -15,7 +15,8 @@ public class Heart : MonoBehaviour
         spriteRenderer.sprite = sprites[lifeCount];
     }
 
-    public void restart(){
+    public void restart()
+    {
         lifeCount = 0;
         spriteRenderer.sprite = sprites[lifeCount];
     }
@@ -29,7 +30,10 @@ public class Heart : MonoBehaviour
     public void damage()
     {
         lifeCount++;
-        spriteRenderer.sprite = sprites[lifeCount];
+        if (sprites.Length < lifeCount)
+        {
+            spriteRenderer.sprite = sprites[lifeCount];
+        }
     }
     public int checklife()
     {

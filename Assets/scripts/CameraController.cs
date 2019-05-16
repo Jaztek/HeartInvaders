@@ -4,60 +4,57 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    // Transform of the GameObject you want to shake
+    private Transform transform;
 
-    public GameObject ejemplo;
-    Vector3 vectorObjetivo;
-    Vector3 vectorMenu = new Vector3(0, 0, -2);
-    Vector3 vectorGame = new Vector3(0, 0, -10);
+    // Desired duration of the shake effect
+    private float shakeDuration = 0f;
 
+    // A measure of magnitude for the shake. Tweak based on your preference
+    private float shakeMagnitude = 0.05f;
+
+    // A measure of how quickly the shake effect should evaporate
+    private float dampingSpeed = 0.8f;
+
+    // The initial position of the GameObject
+    Vector3 initialPosition;
+
+
+    void Awake()
+    {
+        if (transform == null)
+        {
+            transform = GetComponent(typeof(Transform)) as Transform;
+        }
+    }
+
+    void OnEnable()
+    {
+        initialPosition = transform.localPosition;
+    }
     void Start()
     {
-        vectorObjetivo = vectorMenu;
-        StartCoroutine("goToVector");
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-    }
-
-    public void goToGame()
-    {
-        vectorObjetivo = vectorGame;
-       // GetComponent<Camera>().SetStereoProjectionMatrix() = Camera.projectionMatrix.
-    }
-    public void goToMenu()
-    {
-        vectorObjetivo = vectorMenu;
-    }
-
-
-    IEnumerator goToVector()
-    {
-
-        for (; ; )
+        if (shakeDuration > 0)
         {
-            if (vectorObjetivo != null)
-            {
+            transform.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
 
-                float z = transform.position.z;
-
-                // && (Mathf.Abs((transform.position.z - vectorObjetivo.z)) > 1)
-                if (transform.position.z != vectorObjetivo.z)
-                //&& transform.position.z + 0.1f < vectorObjetivo.z && transform.position.z - 0.1f > vectorObjetivo.z)
-                {
-                    z = transform.position.z < vectorObjetivo.z ? transform.position.z + 0.05f : transform.position.z - 0.1f;
-                }
-
-                Vector3 vectorTemporal = new Vector3(0, 0, z);
-
-               // transform.position = vectorTemporal;
-            }
-
-            //este yield indica  cada cuando se va a llamar a la corrutina, en este caso cada 0.1 segundos.
-            yield return new WaitForSeconds(.01f);
+            shakeDuration -= Time.deltaTime * dampingSpeed;
         }
-
+        else
+        {
+            shakeDuration = 0f;
+            transform.localPosition = initialPosition;
+        }
     }
+
+    public void triggerShake()
+    {
+        shakeDuration = 1.3f;
+    }
+
+
 }

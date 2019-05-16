@@ -59,7 +59,6 @@ public class MainController : MonoBehaviour
         mainCanvas.SetActive(false);
         gameCanvas.SetActive(true);
         lifeHeartContainer.SetActive(false);
-        cameraController.goToGame();
 
         game.restart();
     }
@@ -71,7 +70,6 @@ public class MainController : MonoBehaviour
         gameCanvas.SetActive(false);
         popupScore.SetActive(false);
         lifeHeartContainer.SetActive(true);
-        cameraController.goToMenu();
     }
 
     public void updateCanvas()

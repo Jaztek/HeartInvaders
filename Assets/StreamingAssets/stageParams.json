@@ -155,7 +155,7 @@
         },
         {
             "stage": 7,
-            "fireRate": 0.2,
+            "fireRate": 0.4,
             "maxScore": 220,
             "bullets": [
                 {
@@ -171,11 +171,11 @@
             "bullets": [
                 {
                     "path": "Org/Big",
-                    "probabilidad": 10
+                    "probabilidad": 30
                 },
                 {
                     "path": "Red/Sml",
-                    "probabilidad": 15
+                    "probabilidad": 5
                 },
                 {
                     "path": "Org/Med",
@@ -183,7 +183,7 @@
                 },
                 {
                     "path": "Org/Sml",
-                    "probabilidad": 15
+                    "probabilidad": 5
                 }
             ]
         },
@@ -243,7 +243,7 @@
         },
         {
             "stage": 999,
-            "fireRate": 0.5,
+            "fireRate": 0.4,
             "maxScore": 3000,
             "bullets": [
                 {
