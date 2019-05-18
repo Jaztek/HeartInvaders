@@ -11,10 +11,11 @@ public class GameController : MonoBehaviour
     public GameObject heart;
     public GameObject log;
     public GameObject popup;
-    public MainController main;
     public GameObject tutoCanvas;
     public GameObject stageCanvas;
     public GameObject kaboom;
+    public MainController main;
+    public Barrera barreras;
 
 
     public float nextFire = 2;
@@ -201,8 +202,13 @@ public class GameController : MonoBehaviour
     {
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
         camera.GetComponent<CameraController>().triggerShake();
-        GameObject kaboomInst = Instantiate(kaboom,  new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject kaboomInst = Instantiate(kaboom, new Vector3(0, 0, 0), Quaternion.identity);
         kaboomInst.transform.SetParent(heart.transform.parent);
+    }
+
+    public void activeBarreras(bool active)
+    {
+        barreras.activeBarreras(active);
     }
 }
 

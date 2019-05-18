@@ -28,6 +28,7 @@ public class MainController : MonoBehaviour
         gameModel = LoadSaveService.Load();
         generateHeartsLifes();
         updateCanvas();
+        restart();
 
     }
 
@@ -59,6 +60,7 @@ public class MainController : MonoBehaviour
         mainCanvas.SetActive(false);
         gameCanvas.SetActive(true);
         lifeHeartContainer.SetActive(false);
+        game.activeBarreras(true);
 
         game.restart();
     }
@@ -69,6 +71,7 @@ public class MainController : MonoBehaviour
         mainCanvas.SetActive(true);
         gameCanvas.SetActive(false);
         popupScore.SetActive(false);
+        game.activeBarreras(false);
         lifeHeartContainer.SetActive(true);
     }
 

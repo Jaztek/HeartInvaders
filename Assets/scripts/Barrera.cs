@@ -11,6 +11,8 @@ public class Barrera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         /*
         Para el pc---
         Vector3 vectorCameraM = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -97,5 +99,10 @@ public class Barrera : MonoBehaviour
 
         barreraRoja.transform.eulerAngles = new Vector3(barreraRoja.transform.rotation.x, barreraRoja.transform.rotation.y, currentAngle + 90);
 
+    }
+
+    public void activeBarreras(bool active)
+    {
+        this.gameObject.SetActive(active);
     }
 }

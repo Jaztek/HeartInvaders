@@ -30,7 +30,7 @@ public class Heart : MonoBehaviour
     public void damage()
     {
         lifeCount++;
-        if (sprites.Length < lifeCount)
+        if (sprites.Length > lifeCount)
         {
             spriteRenderer.sprite = sprites[lifeCount];
         }
