@@ -23,43 +23,70 @@ public static class LoadSaveService
     {
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
-            GameModel gameModel = (GameModel)bf.Deserialize(file);
-            file.Close();
-            file.Dispose();
+            try
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
+                GameModel gameModel = (GameModel)bf.Deserialize(file);
+                file.Close();
+                file.Dispose();
 
-            game = gameModel;
+                game = gameModel;
+            }
+            catch (System.Exception)
+            {
+                //print("no ha ido bien lo de cargar");
+                game = new GameModel();
+                game.lifes = 10;
+                game.bombs = 2;
+                game.maxScore = 0;
+                game.maxStage = 0;
+                savePlayerTemp(game);
+                throw;
+            }
+
+
+
         }
         else
         {
             game = new GameModel();
             game.lifes = 10;
+            game.bombs = 2;
             game.maxScore = 0;
             game.maxStage = 0;
             savePlayerTemp(game);
         }
-
+       
         return game;
     }
 
-    public static GameModel saveCurrentGame(int lifesLost, long score, int stage)
+    public static GameModel saveCurrentGame(int lifesLost, long score, int stage, int bombs)
     {
         GameModel gameModel = new GameModel();
         gameModel.lifes = game.lifes - lifesLost;
         gameModel.maxScore = game.maxScore < score ? score : game.maxScore;
         gameModel.maxStage = game.maxStage < stage ? stage : game.maxStage;
+        gameModel.bombs = bombs;
         savePlayerTemp(gameModel);
 
-		return game;
+        return game;
     }
 
-	public static GameModel addLifes(int lifes)
+    public static GameModel addLifes(int lifes)
     {
         game.lifes = lifes;
         savePlayerTemp(game);
 
-		return game;
+        return game;
+    }
+
+    public static GameModel addBoms(int boms)
+    {
+        game.bombs = boms;
+        savePlayerTemp(game);
+
+        return game;
     }
 
 }

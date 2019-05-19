@@ -47,11 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\Barrera.cs" />
-     <Compile Include="Assets\scripts\CameraController.cs" />
-     <Compile Include="Assets\scripts\GameController.cs" />
+     <Compile Include="Assets\scripts\Controllers\CameraController.cs" />
+     <Compile Include="Assets\scripts\Controllers\GameController.cs" />
+     <Compile Include="Assets\scripts\Controllers\MainController.cs" />
+     <Compile Include="Assets\scripts\Controllers\PlayerController.cs" />
      <Compile Include="Assets\scripts\Heart.cs" />
      <Compile Include="Assets\scripts\LoadSaveService.cs" />
-     <Compile Include="Assets\scripts\MainController.cs" />
      <Compile Include="Assets\scripts\Models\GameModel.cs" />
      <Compile Include="Assets\scripts\Models\StageModel.cs" />
      <Compile Include="Assets\scripts\PopupScore.cs" />
@@ -59,10 +60,12 @@
      <Compile Include="Assets\scripts\ScoreController.cs" />
      <Compile Include="Assets\scripts\Shot.cs" />
      <Compile Include="Assets\scripts\StageService.cs" />
+     <Compile Include="Assets\scripts\canvas\AddBoms.cs" />
      <Compile Include="Assets\scripts\canvas\AddLifes.cs" />
      <Compile Include="Assets\scripts\canvas\Exit.cs" />
      <Compile Include="Assets\scripts\canvas\StartGame.cs" />
      <Compile Include="Assets\scripts\canvas\Tutorial.cs" />
+     <Compile Include="Assets\scripts\canvas\boomsController.cs" />
      <Compile Include="Assets\scripts\canvas\btBoom.cs" />
      <Compile Include="Assets\scripts\canvas\stageCanvas.cs" />
      <Compile Include="Assets\scripts\kaboom.cs" />

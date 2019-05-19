@@ -7,23 +7,29 @@ using System.IO;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject score;
-    public GameObject heart;
-    public GameObject log;
-    public GameObject popup;
-    public GameObject tutoCanvas;
-    public GameObject stageCanvas;
-    public GameObject kaboom;
+    [Header("Controllers")]
+    public PlayerController player;
     public MainController main;
+
+    [Header("Game Objects")]
+    public GameObject heart;
+    public GameObject popup;
+    public GameObject kaboom;
     public Barrera barreras;
 
+    [Header("Canvas")]
+    public GameObject tutoCanvas;
+    public GameObject stageCanvas;
+    public GameObject score;
+    private ScoreController scoreController;
+    public GameObject log;
+    public boomsController bombs;
 
+    [Header("Variables")]
     public float nextFire = 2;
     public float fireRate = 2;
 
-    private ScoreController scoreController;
     private bool gameOver = true;
-
     private StageModel currentStage;
     private StagesList stages;
 
@@ -151,14 +157,13 @@ public class GameController : MonoBehaviour
         loadStage();
         heart.GetComponent<Heart>().restart();
         scoreController.restartScore();
+        bombs.setBombs(player.getBombs());
 
         if (currentStage.stage == 0)
         {
             tutoCanvas.SetActive(true);
         }
         StartCoroutine("delayStartGame");
-
-
     }
 
     IEnumerator delayStartGame()
@@ -200,10 +205,17 @@ public class GameController : MonoBehaviour
 
     public void boom()
     {
-        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-        camera.GetComponent<CameraController>().triggerShake();
-        GameObject kaboomInst = Instantiate(kaboom, new Vector3(0, 0, 0), Quaternion.identity);
-        kaboomInst.transform.SetParent(heart.transform.parent);
+        print("GC" + player.getBombs());
+        if (player.getBombs() > 0)
+        {
+            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+            camera.GetComponent<CameraController>().triggerShake();
+            GameObject kaboomInst = Instantiate(kaboom, new Vector3(0, 0, 0), Quaternion.identity);
+            kaboomInst.transform.SetParent(heart.transform.parent);
+
+            player.setBooms(player.getBombs() - 1);
+            bombs.setBombs(player.getBombs());
+        }
     }
 
     public void activeBarreras(bool active)

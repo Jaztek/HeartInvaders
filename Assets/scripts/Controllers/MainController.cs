@@ -6,19 +6,23 @@ using UnityEngine.UI;
 public class MainController : MonoBehaviour
 {
 
-    public GameController game;
-
+    [Header("Canvas")]
     public GameObject gameCanvas;
     public GameObject mainCanvas;
-
-    public GameObject lifeHeartContainer;
     public GameObject popupScore;
     public GameObject textLifes;
     public GameObject textScore;
 
+    [Header("Models")]
+    private GameModel gameModel;
+
+    [Header("Controllers")]
+    public GameController game;
+    public PlayerController player;
     public CameraController cameraController;
 
-    private GameModel gameModel;
+    [Header("Game Objects")]
+    public GameObject lifeHeartContainer;
 
     // private GameController game;
     //private Home
@@ -57,6 +61,7 @@ public class MainController : MonoBehaviour
 
     public void startGame()
     {
+        player.setGameModel(gameModel);
         mainCanvas.SetActive(false);
         gameCanvas.SetActive(true);
         lifeHeartContainer.SetActive(false);
@@ -83,7 +88,7 @@ public class MainController : MonoBehaviour
 
     public void backToMenu(long score, int stage)
     {
-        gameModel = LoadSaveService.saveCurrentGame(1, score, stage);
+        gameModel = LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
         generateHeartsLifes();
         updateCanvas();
         restart();
@@ -91,9 +96,16 @@ public class MainController : MonoBehaviour
 
     public void setLifesTo(int lifes)
     {
-        gameModel = LoadSaveService.addLifes(10);
+        gameModel = LoadSaveService.addLifes(lifes);
         generateHeartsLifes();
         updateCanvas();
     }
+
+    public void addBoms(int boms)
+    {
+        gameModel = LoadSaveService.addBoms(boms);
+        // generateHeartsLifes();
+        // updateCanvas();
+    }
 }
-   
+
