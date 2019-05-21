@@ -20,6 +20,7 @@ public class MainController : MonoBehaviour
     public GameController game;
     public PlayerController player;
     public CameraController cameraController;
+    public MusicController music;
 
     [Header("Game Objects")]
     public GameObject lifeHeartContainer;
@@ -32,7 +33,10 @@ public class MainController : MonoBehaviour
         gameModel = LoadSaveService.Load();
         generateHeartsLifes();
         updateCanvas();
-        restart();
+        restartMenu();
+        music.playClipMain();
+
+         FirebaseController firebase = new FirebaseController();
 
     }
 
@@ -61,6 +65,7 @@ public class MainController : MonoBehaviour
 
     public void startGame()
     {
+        music.stopMusic();
         player.setGameModel(gameModel);
         mainCanvas.SetActive(false);
         gameCanvas.SetActive(true);
@@ -68,10 +73,13 @@ public class MainController : MonoBehaviour
         game.activeBarreras(true);
 
         game.restart();
+
+       
     }
 
-    public void restart()
+    public void restartMenu()
     {
+        music.playClipMain();
         game.setGameOver();
         mainCanvas.SetActive(true);
         gameCanvas.SetActive(false);
@@ -91,7 +99,8 @@ public class MainController : MonoBehaviour
         gameModel = LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
         generateHeartsLifes();
         updateCanvas();
-        restart();
+        restartMenu();
+         music.playClipMain();
     }
 
     public void setLifesTo(int lifes)

@@ -13,6 +13,7 @@ public class StageModel
     public int stage;
     public float fireRate;
     public long maxScore;
+    public string music;
     public BulletModel[] bullets;
 }
 

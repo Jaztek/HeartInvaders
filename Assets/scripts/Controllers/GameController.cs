@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     [Header("Controllers")]
     public PlayerController player;
     public MainController main;
+    public MusicController music;
 
     [Header("Game Objects")]
     public GameObject heart;
@@ -133,7 +134,7 @@ public class GameController : MonoBehaviour
         if (scoreController.getScore() >= currentStage.maxScore && stages.stagesList.Length >= currentStage.stage + 1)
         {
             currentStage = stages.stagesList[currentStage.stage + 1];
-            instaciateStageUI(currentStage.stage);
+            changeStage(currentStage);
         }
     }
 
@@ -149,6 +150,8 @@ public class GameController : MonoBehaviour
     public void setGameOver()
     {
         gameOver = true;
+        destroyAllBullets();
+        music.stopMusic();
         popup.SetActive(true);
         popup.GetComponent<PopupScore>().setData(scoreController.getScore().ToString("0000000"), currentStage.stage.ToString());
     }
@@ -172,7 +175,7 @@ public class GameController : MonoBehaviour
         {
             yield return new WaitForSeconds(4f);
             gameOver = false;
-            instaciateStageUI(currentStage.stage);
+            changeStage(currentStage);
             break;
         }
 
@@ -196,11 +199,16 @@ public class GameController : MonoBehaviour
         main.backToMenu(scoreController.getScore(), currentStage.stage);
     }
 
-    public void instaciateStageUI(int stage)
+    public void changeStage(StageModel stage)
     {
         GameObject stageUI = Instantiate(stageCanvas, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         stageUI.transform.SetParent(GameObject.FindGameObjectWithTag("stageCanvas").transform, false);
-        stageUI.GetComponent<stageCanvas>().setText(stage.ToString());
+        stageUI.GetComponent<stageCanvas>().setText(stage.stage.ToString());
+
+        if (stage.music != null)
+        {
+            music.playSong(stage.music);
+        }
     }
 
     public void boom()
@@ -221,6 +229,15 @@ public class GameController : MonoBehaviour
     public void activeBarreras(bool active)
     {
         barreras.activeBarreras(active);
+    }
+
+    public void destroyAllBullets()
+    {
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("bullet");
+        foreach (var bull in bullets)
+        {
+            Destroy(bull);
+        }
     }
 }
 
