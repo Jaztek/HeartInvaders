@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="firebase_database_url" translatable="false">https://heart-beat-defender.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">143237912019</string>
+  <string name="google_storage_bucket" translatable="false">heart-beat-defender.appspot.com</string>
+  <string name="project_id" translatable="false">heart-beat-defender</string>
+  <string name="google_api_key" translatable="false">AIzaSyAYnBRka7TBdaJQLJM-_FfCvlXUwPSnpQw</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAYnBRka7TBdaJQLJM-_FfCvlXUwPSnpQw</string>
+  <string name="google_app_id" translatable="false">1:143237912019:android:7d64bb46b19a2bd9</string>
+  <string name="default_web_client_id" translatable="false">143237912019-bc36fa02k0mas5q81405b6ttepnugv25.apps.googleusercontent.com</string>
+</resources>
