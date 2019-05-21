@@ -213,7 +213,6 @@ public class GameController : MonoBehaviour
 
     public void boom()
     {
-        print("GC" + player.getBombs());
         if (player.getBombs() > 0)
         {
             GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");

@@ -34,7 +34,7 @@ public class MainController : MonoBehaviour
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
-        music.playClipMain();
+        music.playSong("casaAsteroide");
 
          FirebaseController firebase = new FirebaseController();
 
@@ -73,14 +73,12 @@ public class MainController : MonoBehaviour
         game.activeBarreras(true);
 
         game.restart();
-
-       
     }
 
     public void restartMenu()
     {
-        music.playClipMain();
         game.setGameOver();
+        music.playSong("casaAsteroide");
         mainCanvas.SetActive(true);
         gameCanvas.SetActive(false);
         popupScore.SetActive(false);
@@ -100,7 +98,7 @@ public class MainController : MonoBehaviour
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
-         music.playClipMain();
+        music.playSong("casaAsteroide");
     }
 
     public void setLifesTo(int lifes)
@@ -113,8 +111,6 @@ public class MainController : MonoBehaviour
     public void addBoms(int boms)
     {
         gameModel = LoadSaveService.addBoms(boms);
-        // generateHeartsLifes();
-        // updateCanvas();
     }
 }
 

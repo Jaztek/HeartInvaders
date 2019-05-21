@@ -11,29 +11,22 @@ public class MusicController : MonoBehaviour
     public AudioClip enemigosMisterioso;
     public AudioClip enemigosFuerte;
     public AudioClip enemigosBoss;
-    public float fadeTime = 2f;
 
+    private float fadeTime = 2.5f;
     private AudioSource audioSource;
+    private bool fadingOut = false;
+    private float startVolume;
+
 
     void Awake()
     {
         audioSource = this.GetComponent<AudioSource>();
-    }
-
-    public void playClipMain()
-    {
-        audioSource.clip = casaAsteroide;
-        audioSource.Play();
-    }
-
-    public void playClipEnemies()
-    {
-        audioSource.clip = enemigos;
-        audioSource.Play();
+        startVolume = audioSource.volume;
     }
 
     public void stopMusic()
     {
+        fadingOut = true;
         StartCoroutine("FadeOut");
 
     }
@@ -45,6 +38,7 @@ public class MusicController : MonoBehaviour
 
     public void playSong(string song)
     {
+        fadingOut = false;
         switch (song)
         {
             case "casaAsteroide":
@@ -74,17 +68,28 @@ public class MusicController : MonoBehaviour
 
     }
 
-    public IEnumerator FadeOut () {
-        float startVolume = audioSource.volume;
- 
-        while (audioSource.volume > 0) {
-            audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
- 
-            yield return null;
+    public IEnumerator FadeOut()
+    {
+        while (audioSource.volume > 0)
+        {
+            if (fadingOut)
+            {
+                audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
+                yield return null;
+            }
+            else
+            {
+                audioSource.volume = startVolume;
+                break;
+            }
+
         }
- 
-        audioSource.Stop ();
         audioSource.volume = startVolume;
+        if (fadingOut)
+        {
+            audioSource.Stop();
+            fadingOut = false;
+        }
     }
 
 
