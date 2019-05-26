@@ -28,6 +28,12 @@ public class FirebaseController
     public void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
     {
         UnityEngine.Debug.Log("Received Registration Token: " + token.Token);
+
+        Firebase.Messaging.FirebaseMessage message = new Firebase.Messaging.FirebaseMessage();
+        message.To = token.Token + "";
+        message.MessageId = "500";
+        message.Data["hello"] = "world";
+        Firebase.Messaging.FirebaseMessaging.Send(message);
     }
 
     public void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)

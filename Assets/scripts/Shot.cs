@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shot : MonoBehaviour
 {
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbodyShot;
     public int speed = 50;
     private GameController gameController;
 
@@ -16,7 +16,7 @@ public class Shot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbodyShot = GetComponent<Rigidbody2D>();
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -27,8 +27,8 @@ public class Shot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rigidbody.velocity = transform.TransformDirection(Vector3.right * speed);
-        rigidbody.AddForce(Vector3.right * speed);
+        rigidbodyShot.velocity = transform.TransformDirection(Vector3.right * speed);
+        rigidbodyShot.AddForce(Vector3.right * speed);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
