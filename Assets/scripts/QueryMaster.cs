@@ -52,7 +52,37 @@ public class QueryMaster{
         return playerModel.FindOne(where);
     }
 
-    public static PlayerModel savePlayer(PlayerModel player)
+    public static void savePlayer(PlayerModel player)
+    {
+        if (!isOnline())
+        {
+            UnityEngine.Debug.LogError("Sin conexión a BBDD");
+        }
+        else
+        {
+            playerModel = db.GetCollection<PlayerModel>("users");
+
+            PlayerModel playerBBDD = LoadPlayer(player.deviceId);
+            if (playerBBDD != null)
+            {
+                var where = new QueryDocument("deviceId", player.deviceId);
+                if (player.maxScore > playerBBDD.maxScore)
+                {
+                    playerModel.Update(where, Update.Set("maxScore", player.maxScore));
+                }
+                if (player.token != null)
+                {
+                    playerModel.Update(where, Update.Set("token", player.token));
+                }
+            }
+            else
+            {
+                playerModel.Save(player);
+            }
+        }
+    }
+
+    public static PlayerModel LoadPlayer(string deviceId)
     {
         if (!isOnline())
         {
@@ -61,8 +91,7 @@ public class QueryMaster{
         }
         playerModel = db.GetCollection<PlayerModel>("users");
 
-        playerModel.Save(player);
-
-        return player;
+        var where = new QueryDocument("deviceId", deviceId);
+        return playerModel.FindOne(where);
     }
 }

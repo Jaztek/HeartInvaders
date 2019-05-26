@@ -16,6 +16,8 @@ public static class LoadSaveService
         game = gameModel;
 
         file.Close();
+
+        QueryMaster.savePlayer(game.playerModel);
     }
 
 
@@ -39,8 +41,19 @@ public static class LoadSaveService
                 game = new GameModel();
                 game.lifes = 10;
                 game.bombs = 2;
-                game.maxScore = 0;
                 game.maxStage = 0;
+
+                PlayerModel playerModel = QueryMaster.LoadPlayer(SystemInfo.deviceUniqueIdentifier);
+
+                if (playerModel == null)
+                {
+                    playerModel = new PlayerModel();
+                    playerModel.deviceId = SystemInfo.deviceUniqueIdentifier;
+                    //TODO: PEDIR NICKNAME
+                    playerModel.name = "Nombre: " + SystemInfo.deviceUniqueIdentifier;
+                    playerModel.maxScore = 0;
+                }
+                game.playerModel = playerModel;
                 savePlayerTemp(game);
                 throw;
             }
@@ -53,8 +66,19 @@ public static class LoadSaveService
             game = new GameModel();
             game.lifes = 10;
             game.bombs = 2;
-            game.maxScore = 0;
             game.maxStage = 0;
+
+            PlayerModel playerModel = QueryMaster.LoadPlayer(SystemInfo.deviceUniqueIdentifier);
+
+            if (playerModel == null)
+            {
+                playerModel = new PlayerModel();
+                playerModel.deviceId = SystemInfo.deviceUniqueIdentifier;
+                //TODO: PEDIR NICKNAME
+                playerModel.name = "Nombre: " + SystemInfo.deviceUniqueIdentifier;
+                playerModel.maxScore = 0;
+            }
+            game.playerModel = playerModel;
             savePlayerTemp(game);
         }
        
@@ -65,9 +89,10 @@ public static class LoadSaveService
     {
         GameModel gameModel = new GameModel();
         gameModel.lifes = game.lifes - lifesLost;
-        gameModel.maxScore = game.maxScore < score ? score : game.maxScore;
         gameModel.maxStage = game.maxStage < stage ? stage : game.maxStage;
         gameModel.bombs = bombs;
+        gameModel.playerModel = game.playerModel;
+        gameModel.playerModel.maxScore = gameModel.playerModel.maxScore < score ? score : gameModel.playerModel.maxScore;
         savePlayerTemp(gameModel);
 
         return game;

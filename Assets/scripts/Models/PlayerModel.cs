@@ -1,11 +1,13 @@
 using System.IO;
 using UnityEngine;
+using MongoDB.Bson;
 
 [System.Serializable]
 public class PlayerModel
 {
-    public string id;
+    public ObjectId Id { get; set; }
+    public string deviceId;
     public string token;
     public string name;
-    public int maxScore;
+    public long maxScore;
 }
