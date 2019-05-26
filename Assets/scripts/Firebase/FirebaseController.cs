@@ -30,6 +30,9 @@ public class FirebaseController
     public void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
     {
         UnityEngine.Debug.Log("Received Registration Token: " + token.Token);
+        LoadSaveService.game.playerModel.token = token.Token;
+        QueryMaster.savePlayer(LoadSaveService.game.playerModel);
+
     }
 
     public void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
