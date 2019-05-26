@@ -4,7 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerModel
 {
+    public string id;
     public string token;
-    public string phone;
+    public string name;
     public int maxScore;
 }
