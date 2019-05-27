@@ -67,4 +67,10 @@ public class Shot : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
         }
     }
+
+    void OnDestroy()
+    {
+         GameObject explosion = (GameObject)Resources.Load("Prefabs/Expl/Explosion", typeof(GameObject));
+         Instantiate(explosion, this.transform.position, this.transform.rotation);
+    }
 }
