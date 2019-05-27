@@ -70,49 +70,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9868}
+      Script: {instanceID: 9872}
     - Class: 114
-<<<<<<< Updated upstream
-      Script: {instanceID: 9956}
-    - Class: 114
-      Script: {instanceID: 9982}
-    - Class: 114
-      Script: {instanceID: 10004}
-    - Class: 114
-      Script: {instanceID: 10042}
-    - Class: 114
-      Script: {instanceID: 10096}
-    - Class: 114
-      Script: {instanceID: 10114}
-    - Class: 114
-      Script: {instanceID: 10120}
-    - Class: 114
-      Script: {instanceID: 10126}
-    - Class: 114
-      Script: {instanceID: 10170}
-    - Class: 114
-      Script: {instanceID: 10200}
-    - Class: 114
-      Script: {instanceID: 10268}
-    - Class: 114
-      Script: {instanceID: 10366}
-    - Class: 114
-      Script: {instanceID: 10380}
-    - Class: 114
-      Script: {instanceID: 10412}
-    - Class: 114
-      Script: {instanceID: 10448}
-    - Class: 114
-      Script: {instanceID: 10616}
-    - Class: 114
-      Script: {instanceID: 10702}
-    - Class: 114
-      Script: {instanceID: 10798}
-    - Class: 114
-      Script: {instanceID: 10900}
-    - Class: 114
-      Script: {instanceID: 10916}
-=======
       Script: {instanceID: 9960}
     - Class: 114
       Script: {instanceID: 9986}
@@ -133,52 +92,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10204}
     - Class: 114
-      Script: {instanceID: 10278}
+      Script: {instanceID: 10272}
     - Class: 114
-      Script: {instanceID: 10376}
+      Script: {instanceID: 10370}
     - Class: 114
-      Script: {instanceID: 10392}
+      Script: {instanceID: 10384}
     - Class: 114
-      Script: {instanceID: 10422}
+      Script: {instanceID: 10416}
     - Class: 114
       Script: {instanceID: 10452}
     - Class: 114
-      Script: {instanceID: 10626}
+      Script: {instanceID: 10620}
     - Class: 114
-      Script: {instanceID: 10716}
+      Script: {instanceID: 10706}
     - Class: 114
-      Script: {instanceID: 10812}
+      Script: {instanceID: 10804}
     - Class: 114
-      Script: {instanceID: 10914}
->>>>>>> Stashed changes
+      Script: {instanceID: 10908}
     - Class: 114
-      Script: {instanceID: 10918}
+      Script: {instanceID: 10924}
     - Class: 114
-<<<<<<< Updated upstream
-      Script: {instanceID: 10984}
+      Script: {instanceID: 10926}
     - Class: 114
-      Script: {instanceID: 11002}
+      Script: {instanceID: 10992}
     - Class: 114
-      Script: {instanceID: 11150}
+      Script: {instanceID: 11010}
     - Class: 114
-      Script: {instanceID: 11300}
+      Script: {instanceID: 11162}
     - Class: 114
-      Script: {instanceID: 11534}
+      Script: {instanceID: 11312}
     - Class: 114
-      Script: {instanceID: 11604}
-=======
-      Script: {instanceID: 10932}
+      Script: {instanceID: 11546}
     - Class: 114
-      Script: {instanceID: 10996}
-    - Class: 114
-      Script: {instanceID: 11014}
-    - Class: 114
-      Script: {instanceID: 11306}
-    - Class: 114
-      Script: {instanceID: 11528}
-    - Class: 114
-      Script: {instanceID: 11602}
->>>>>>> Stashed changes
+      Script: {instanceID: 11616}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -969,4 +915,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/scenes/gameplay.unity
-  playerPath: C:/Users/Juan Carlos/Desktop/heart2.apk
+  playerPath: C:/Users/javie/Desktop/asd.apk
