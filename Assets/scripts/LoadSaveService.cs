@@ -34,6 +34,22 @@ public static class LoadSaveService
                 file.Dispose();
 
                 game = gameModel;
+
+                if (game.playerModel == null)
+                {
+                    PlayerModel playerModel = QueryMaster.LoadPlayer(SystemInfo.deviceUniqueIdentifier);
+
+                    if (playerModel == null)
+                    {
+                        playerModel = new PlayerModel();
+                        playerModel.deviceId = SystemInfo.deviceUniqueIdentifier;
+                        //TODO: PEDIR NICKNAME
+                        playerModel.name = "Nombre: " + SystemInfo.deviceUniqueIdentifier;
+                        playerModel.maxScore = 0;
+                    }
+                    game.playerModel = playerModel;
+                    savePlayerTemp(game);
+                }
             }
             catch (System.Exception)
             {
@@ -81,7 +97,7 @@ public static class LoadSaveService
             game.playerModel = playerModel;
             savePlayerTemp(game);
         }
-       
+
         return game;
     }
 
