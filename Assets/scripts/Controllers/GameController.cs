@@ -153,7 +153,7 @@ public class GameController : MonoBehaviour
         destroyAllBullets();
         music.stopMusic();
         popup.SetActive(true);
-        popup.GetComponent<PopupScore>().setData(scoreController.getScore().ToString("0000000"), currentStage.stage.ToString());
+        popup.GetComponent<PopupScore>().setData(scoreController.getScore(), currentStage.stage);
     }
     public void restart()
     {

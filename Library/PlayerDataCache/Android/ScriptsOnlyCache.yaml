@@ -20,13 +20,8 @@ ScriptsOnlyBuild:
     - boomsController
     - btBoom
     - kaboom
+    - progresBar
     - stageCanvas
-    UnityEditor.Graphs.dll:
-    - UnityEditor.Graphs.AnimationBlendTree.Graph
-    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.Graph
-    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -38,8 +33,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.Text
-    XiaomiSupport.dll:
-    - AppStoresSupport.AppStoreSettings
   sceneClasses:
     Assets/scenes/gameplay.unity:
     - Class: 1
@@ -77,63 +70,61 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9860}
+      Script: {instanceID: 9872}
     - Class: 114
-      Script: {instanceID: 9950}
+      Script: {instanceID: 9960}
     - Class: 114
-      Script: {instanceID: 9976}
+      Script: {instanceID: 9986}
     - Class: 114
-      Script: {instanceID: 9998}
+      Script: {instanceID: 10008}
     - Class: 114
-      Script: {instanceID: 10036}
+      Script: {instanceID: 10046}
     - Class: 114
-      Script: {instanceID: 10090}
+      Script: {instanceID: 10100}
     - Class: 114
-      Script: {instanceID: 10108}
+      Script: {instanceID: 10118}
     - Class: 114
-      Script: {instanceID: 10114}
+      Script: {instanceID: 10124}
     - Class: 114
-      Script: {instanceID: 10120}
+      Script: {instanceID: 10130}
     - Class: 114
-      Script: {instanceID: 10164}
+      Script: {instanceID: 10174}
     - Class: 114
-      Script: {instanceID: 10194}
+      Script: {instanceID: 10204}
     - Class: 114
-      Script: {instanceID: 10270}
+      Script: {instanceID: 10272}
     - Class: 114
-      Script: {instanceID: 10366}
+      Script: {instanceID: 10370}
     - Class: 114
-      Script: {instanceID: 10382}
+      Script: {instanceID: 10384}
     - Class: 114
-      Script: {instanceID: 10412}
+      Script: {instanceID: 10416}
     - Class: 114
-      Script: {instanceID: 10442}
+      Script: {instanceID: 10452}
     - Class: 114
-      Script: {instanceID: 10616}
+      Script: {instanceID: 10620}
     - Class: 114
       Script: {instanceID: 10706}
     - Class: 114
-      Script: {instanceID: 10802}
+      Script: {instanceID: 10804}
     - Class: 114
-      Script: {instanceID: 10904}
+      Script: {instanceID: 10908}
     - Class: 114
-      Script: {instanceID: 10920}
+      Script: {instanceID: 10924}
     - Class: 114
-      Script: {instanceID: 10922}
+      Script: {instanceID: 10926}
     - Class: 114
-      Script: {instanceID: 10986}
+      Script: {instanceID: 10992}
     - Class: 114
-      Script: {instanceID: 11004}
+      Script: {instanceID: 11010}
     - Class: 114
-      Script: {instanceID: 11294}
+      Script: {instanceID: 11162}
     - Class: 114
-      Script: {instanceID: 11514}
+      Script: {instanceID: 11312}
     - Class: 114
-      Script: {instanceID: 11588}
+      Script: {instanceID: 11546}
     - Class: 114
-      Script: {instanceID: 14598}
-    - Class: 114
-      Script: {instanceID: 25222}
+      Script: {instanceID: 11616}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -617,12 +608,6 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Firebase.Platform.dll
-    namespaceName: Firebase.Platform
-    className: FirebaseMonoBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: 500ec4aeb80159397c59647099c12256
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -749,7 +734,7 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: 1526310ed9a4959b1b48f42ed57264bd
+      Hash: 50a1fc2768b75b7f3ee8c76a91fad8a6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MusicController
@@ -809,7 +794,7 @@ ScriptsOnlyBuild:
     className: stageCanvas
   - hash:
       serializedVersion: 2
-      Hash: 4583c6c639b143e8f6beefa05ca27131
+      Hash: bc699f3e539de782c9b88ea99ed3b09e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PopupScore
@@ -825,6 +810,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
+  - hash:
+      serializedVersion: 2
+      Hash: 684e8fb0e8b11420781998265f60a8ba
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: progresBar
   - hash:
       serializedVersion: 2
       Hash: 516824a435828eadd660ef2f1658a48e
@@ -881,6 +872,12 @@ ScriptsOnlyBuild:
     className: PlayModeRunnerCallback
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Firebase.Platform.dll
+    namespaceName: Firebase.Platform
+    className: FirebaseMonoBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: 8649814970b42d345b89944b862453cc
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -915,19 +912,7 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ScoreController
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: UnityStore.dll
-    namespaceName: UnityEngine.Store
-    className: MainThreadDispatcher
-  - hash:
-      serializedVersion: 2
-      Hash: a318a82d5abde553e75543c7b3aba918
-    assemblyName: XiaomiSupport.dll
-    namespaceName: AppStoresSupport
-    className: AppStoreSettings
   platform: 13
   scenePathNames:
   - Assets/scenes/gameplay.unity
-  playerPath: C:/Users/Juan Carlos/Desktop/heart1.apk
+  playerPath: C:/Users/javie/Desktop/asd.apk

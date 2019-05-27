@@ -36,8 +36,8 @@ public class MainController : MonoBehaviour
         restartMenu();
         music.playSong("casaAsteroide");
 
-         FirebaseController firebase = new FirebaseController();
-
+        FirebaseController firebase = new FirebaseController();
+        firebase.sendMessageTo("ePm0ZIBWHM8:APA91bGH2NDzbX08wK7i9yXZyIBxHHUYqgi5MlxM3e3hAr1L0u_a1Z4AcebqwuYq72i3Lx_0Onha0F_LLZZOs8Wj-crsLcdX2pCVUapwaDQaTbs8Wc77wpmjvExBatA22FvOTKaAQVv7","Javier");
     }
 
     private void generateHeartsLifes()
@@ -89,7 +89,7 @@ public class MainController : MonoBehaviour
     public void updateCanvas()
     {
         textLifes.GetComponent<Text>().text = gameModel.lifes.ToString();
-        textScore.GetComponent<Text>().text = gameModel.maxScore.ToString("0000000");
+        textScore.GetComponent<Text>().text = gameModel.playerModel.maxScore.ToString("0000000");
     }
 
     public void backToMenu(long score, int stage)

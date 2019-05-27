@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     // Transform of the GameObject you want to shake
-    private Transform transform;
+    private Transform transformCam;
 
     // Desired duration of the shake effect
     private float shakeDuration = 0f;
@@ -22,15 +22,15 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
-        if (transform == null)
+        if (transformCam == null)
         {
-            transform = GetComponent(typeof(Transform)) as Transform;
+            transformCam = GetComponent(typeof(Transform)) as Transform;
         }
     }
 
     void OnEnable()
     {
-        initialPosition = transform.localPosition;
+        initialPosition = transformCam.localPosition;
     }
     void Start()
     {
@@ -40,14 +40,14 @@ public class CameraController : MonoBehaviour
     {
         if (shakeDuration > 0)
         {
-            transform.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
+            transformCam.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
 
             shakeDuration -= Time.deltaTime * dampingSpeed;
         }
         else
         {
             shakeDuration = 0f;
-            transform.localPosition = initialPosition;
+            transformCam.localPosition = initialPosition;
         }
     }
 
