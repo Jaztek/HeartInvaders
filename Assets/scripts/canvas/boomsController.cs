@@ -9,7 +9,6 @@ public class boomsController : MonoBehaviour
     // Use this for initialization
     public void setBombs(int bombs)
     {
-
         foreach (Transform child in this.transform)
         {
             child.gameObject.SetActive(false);
