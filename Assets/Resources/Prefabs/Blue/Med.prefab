@@ -99,6 +99,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: b8e4f90cb0d3dc848b09c86dbddd9f4c, type: 3}
   - {fileID: 21300000, guid: 7fdf321c4ac6fe94db3782979c27d378, type: 3}
+  explColor: 1
 --- !u!50 &50962936329997160
 Rigidbody2D:
   serializedVersion: 4

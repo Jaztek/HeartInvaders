@@ -7,8 +7,16 @@
             "music": "enemigos",
             "bullets": [
                 {
-                    "path": "Red/Big",
-                    "probabilidad": 100
+                    "path": "Blue/Big",
+                    "probabilidad": 50
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 30
                 }
             ]
         },

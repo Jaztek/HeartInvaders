@@ -24,7 +24,6 @@ public class progresBar : MonoBehaviour
 
         printStageNumbers(intervalIni);
         targetProgress = (stage - intervalIni) / 5f;
-        print(targetProgress);
         targetProgress += UtilsStage.getStageProgres(stage, score);
         StartCoroutine("progress");
     }

@@ -5,11 +5,12 @@ using UnityEngine;
 public class Shot : MonoBehaviour
 {
 
-    private Rigidbody2D rigidbodyShot;
-    public int speed = 50;
-    private GameController gameController;
-
+    public int speed = 7;
     public Sprite[] sprites;
+    public EnumExplColor explColor;
+
+    private Rigidbody2D rigidbodyShot;
+    private GameController gameController;
     private SpriteRenderer spriteRenderer;
 
 
@@ -70,7 +71,8 @@ public class Shot : MonoBehaviour
 
     void OnDestroy()
     {
-         GameObject explosion = (GameObject)Resources.Load("Prefabs/Expl/Explosion", typeof(GameObject));
-         Instantiate(explosion, this.transform.position, this.transform.rotation);
+        GameObject explosionPrefab = (GameObject)Resources.Load("Prefabs/Expl/Explosion", typeof(GameObject));
+        explosionPrefab.GetComponent<Explosion>().setExplParams(this.transform.localScale.x*3, explColor);
+        GameObject explosion = Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);
     }
 }
