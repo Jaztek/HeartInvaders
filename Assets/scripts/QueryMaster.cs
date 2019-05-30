@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class QueryMaster{
 
@@ -42,7 +43,6 @@ public class QueryMaster{
     }
     public static PlayerModel findFriend(string name)
     {
-        //!isOnline()
         if (!isOnline()) {
             UnityEngine.Debug.LogError("Sin conexión a BBDD");
             return null;
@@ -54,32 +54,18 @@ public class QueryMaster{
 
     public static void savePlayer(PlayerModel player)
     {
-        if (!isOnline())
+        Task.Run(() =>
         {
-            UnityEngine.Debug.LogError("Sin conexión a BBDD");
-        }
-        else
-        {
-            playerModel = db.GetCollection<PlayerModel>("users");
-
-            PlayerModel playerBBDD = LoadPlayer(player.deviceId);
-            if (playerBBDD != null)
+            if (!isOnline())
             {
-                var where = new QueryDocument("deviceId", player.deviceId);
-                if (player.maxScore > playerBBDD.maxScore)
-                {
-                    playerModel.Update(where, Update.Set("maxScore", player.maxScore));
-                }
-                if (player.token != null)
-                {
-                    playerModel.Update(where, Update.Set("token", player.token));
-                }
+                UnityEngine.Debug.LogError("Sin conexión a BBDD");
             }
             else
             {
+                playerModel = db.GetCollection<PlayerModel>("users");
                 playerModel.Save(player);
             }
-        }
+        });
     }
 
     public static PlayerModel LoadPlayer(string deviceId)
