@@ -13,9 +13,6 @@ public class MainController : MonoBehaviour
     public GameObject textLifes;
     public GameObject textScore;
 
-    [Header("Models")]
-    private GameModel gameModel;
-
     [Header("Controllers")]
     public GameController game;
     public PlayerController player;
@@ -30,14 +27,14 @@ public class MainController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        gameModel = LoadSaveService.Load();
+        LoadSaveService.Load();
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
         music.playSong("casaAsteroide");
 
-        FirebaseController firebase = new FirebaseController();
-        firebase.sendMessageTo("ePm0ZIBWHM8:APA91bGH2NDzbX08wK7i9yXZyIBxHHUYqgi5MlxM3e3hAr1L0u_a1Z4AcebqwuYq72i3Lx_0Onha0F_LLZZOs8Wj-crsLcdX2pCVUapwaDQaTbs8Wc77wpmjvExBatA22FvOTKaAQVv7","Javier");
+        QueryMaster.test();
+        FirebaseController.start();
     }
 
     private void generateHeartsLifes()
@@ -49,7 +46,7 @@ public class MainController : MonoBehaviour
 
         float currentAngle = 0;
 
-        for (int i = 0; i < gameModel.lifes; i++)
+        for (int i = 0; i < LoadSaveService.game.lifes; i++)
         {
 
             GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/LifeHeart", typeof(GameObject));
@@ -66,7 +63,7 @@ public class MainController : MonoBehaviour
     public void startGame()
     {
         music.stopMusic();
-        player.setGameModel(gameModel);
+        player.setGameModel(LoadSaveService.game);
         mainCanvas.SetActive(false);
         gameCanvas.SetActive(true);
         lifeHeartContainer.SetActive(false);
@@ -88,13 +85,13 @@ public class MainController : MonoBehaviour
 
     public void updateCanvas()
     {
-        textLifes.GetComponent<Text>().text = gameModel.lifes.ToString();
-        textScore.GetComponent<Text>().text = gameModel.playerModel.maxScore.ToString("0000000");
+        textLifes.GetComponent<Text>().text = LoadSaveService.game.lifes.ToString();
+        textScore.GetComponent<Text>().text = LoadSaveService.game.playerModel.maxScore.ToString("0000000");
     }
 
     public void backToMenu(long score, int stage)
     {
-        gameModel = LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
+        LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
@@ -103,14 +100,14 @@ public class MainController : MonoBehaviour
 
     public void setLifesTo(int lifes)
     {
-        gameModel = LoadSaveService.addLifes(lifes);
+        LoadSaveService.addLifes(lifes);
         generateHeartsLifes();
         updateCanvas();
     }
 
     public void addBoms(int boms)
     {
-        gameModel = LoadSaveService.addBoms(boms);
+        LoadSaveService.addBoms(boms);
     }
 }
 

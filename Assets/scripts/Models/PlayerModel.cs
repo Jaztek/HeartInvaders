@@ -10,4 +10,5 @@ public class PlayerModel
     public string token;
     public string name;
     public long maxScore;
+    public string status;
 }

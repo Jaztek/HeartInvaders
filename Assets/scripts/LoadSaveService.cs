@@ -3,29 +3,33 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 
 public static class LoadSaveService
 {
     public static GameModel game;
 
-    private static void savePlayerLocal(GameModel gameModel)
+    public static void savePlayerLocal()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/savedGames.gd");
-        bf.Serialize(file, gameModel);
-        game = gameModel;
+        FileStream file = new FileStream(Application.persistentDataPath + "/savedGames.gd",
+                                       FileMode.OpenOrCreate,
+                                       FileAccess.ReadWrite,
+                                       FileShare.None);
+        bf.Serialize(file, game);
 
-        file.Close();     
+        file.Close();
+        file.Dispose();
     }
 
-    private static void savePlayerRemote(GameModel gameModel)
+    private static void savePlayerRemote()
     {
-        savePlayerLocal(gameModel);
-        QueryMaster.savePlayer(game.playerModel);
+        savePlayerLocal();
+        QueryMaster.savePlayer();
     }
 
 
-        public static GameModel Load()
+        public static void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
@@ -39,10 +43,24 @@ public static class LoadSaveService
 
                 game = gameModel;
 
+                bool isChanged = false;
                 if (game.playerModel == null)
                 {
+                    UnityEngine.Debug.Log("Pidiendo PlayerModel");
                     game.playerModel = getPlayerModel();
-                    savePlayerLocal(game);
+                    isChanged = true;
+                }
+                if (game.onlineModel == null)
+                {
+
+                    UnityEngine.Debug.Log("Pidiendo OnlineModel");
+                    game.onlineModel = getOnlineModel();
+                    isChanged = true;
+                }
+
+                if (isChanged)
+                {
+                    savePlayerLocal();
                 }
             }
             catch (System.Exception)
@@ -55,8 +73,6 @@ public static class LoadSaveService
         {
             createNewPlayer();
         }
-
-        return game;
     }
 
     private static void createNewPlayer()
@@ -66,12 +82,13 @@ public static class LoadSaveService
         game.bombs = 2;
         game.maxStage = 0;
         game.playerModel = getPlayerModel();
-        savePlayerLocal(game);
+        game.onlineModel = getOnlineModel();
+        savePlayerLocal();
     }
 
     private static PlayerModel getPlayerModel()
     {
-        PlayerModel playerModel = QueryMaster.LoadPlayer(SystemInfo.deviceUniqueIdentifier);
+        PlayerModel playerModel = QueryMaster.LoadPlayer();
 
         if (playerModel == null)
         {
@@ -84,41 +101,58 @@ public static class LoadSaveService
         return playerModel;
     }
 
-        public static GameModel saveCurrentGame(int lifesLost, long score, int stage, int bombs)
+    private static OnlineModel getOnlineModel()
     {
-        GameModel gameModel = new GameModel();
-        gameModel.lifes = game.lifes - lifesLost;
-        gameModel.maxStage = game.maxStage < stage ? stage : game.maxStage;
-        gameModel.bombs = bombs;
-        gameModel.playerModel = game.playerModel;
+        OnlineModel onlineModel = QueryMaster.getFriends(SystemInfo.deviceUniqueIdentifier);
 
-        if (gameModel.playerModel.maxScore < score)
+        if (onlineModel == null)
         {
-            gameModel.playerModel.maxScore = score;
-            savePlayerRemote(gameModel);
+            onlineModel = new OnlineModel();
+            onlineModel.deviceId = SystemInfo.deviceUniqueIdentifier;
+            onlineModel.listFriends = new List<PlayerModel>();
+        }
+        return onlineModel;
+    }
+
+    public static void saveCurrentGame(int lifesLost, long score, int stage, int bombs)
+    {
+        game.lifes = game.lifes - lifesLost;
+        game.maxStage = game.maxStage < stage ? stage : game.maxStage;
+        game.bombs = bombs;
+
+        long maxScore = game.playerModel.maxScore;
+        if (maxScore < score)
+        {
+            Task.Run(() =>
+            {
+                game.onlineModel = QueryMaster.getFriends(SystemInfo.deviceUniqueIdentifier);
+                game.onlineModel.listFriends.ForEach(f =>
+                {
+                    if (f.maxScore > maxScore && f.maxScore < score)
+                    {
+                        FirebaseController.sendMessageTo(f.token, score, game.playerModel.name);
+                    }
+                });
+            });
+            game.playerModel.maxScore = score;
+            savePlayerRemote();
         }
         else
         {
-            savePlayerLocal(gameModel);
+            savePlayerLocal();
         }
-
-        return game;
     }
 
-    public static GameModel addLifes(int lifes)
+    public static void addLifes(int lifes)
     {
         game.lifes = lifes;
-        savePlayerLocal(game);
-
-        return game;
+        savePlayerLocal();
     }
 
-    public static GameModel addBoms(int boms)
+    public static void addBoms(int boms)
     {
         game.bombs = boms;
-        savePlayerLocal(game);
-
-        return game;
+        savePlayerLocal();
     }
 
 }

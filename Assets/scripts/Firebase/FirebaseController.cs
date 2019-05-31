@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class FirebaseController
+public static class FirebaseController
 {
-
-    public FirebaseController()
+    public static void start()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
@@ -28,23 +27,23 @@ public class FirebaseController
         });
     }
 
-    public void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
+    private static void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
     {
         UnityEngine.Debug.Log("Received Registration Token: " + token.Token);
         if (LoadSaveService.game.playerModel.token != token.Token)
         {
             LoadSaveService.game.playerModel.token = token.Token;
-            QueryMaster.savePlayer(LoadSaveService.game.playerModel);
+            QueryMaster.savePlayer();
         }
 
     }
 
-    public void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
+    private static void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
     {
         UnityEngine.Debug.Log("Received a new message from: " + e.Message.From);
     }
 
-    public void sendMessageTo(string tokenPerdedor, string nombreGanador)
+    public static void sendMessageTo(string tokenPerdedor, long score, string nombreGanador)
     {
         Task.Run(() => {
             UnityEngine.Debug.Log("---------------------------sendingMessage----------------------------");
@@ -54,8 +53,8 @@ public class FirebaseController
             request.SetRequestHeader("Cache-Control", "no-cache");
 
             NotificationModel notification = new NotificationModel();
-            notification.title = nombreGanador + " te ha superado fuertemente 👀";
-            notification.body = "Juega o seguirás siendo el último 🤡";
+            notification.title = nombreGanador + " te ha superado con " + score + " puntos! 😯";
+            notification.body = "Juega para superarle! 🕹";
 
             FirebaseModel firebaseModel = new FirebaseModel();
             firebaseModel.to = tokenPerdedor;
