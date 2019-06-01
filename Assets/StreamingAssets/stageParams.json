@@ -3,20 +3,32 @@
         {
             "stage": 0,
             "fireRate": 1.3,
-            "maxScore": 10,
+            "maxScore": 100,
             "music": "enemigos",
             "bullets": [
                 {
-                    "path": "Blue/Big",
-                    "probabilidad": 50
-                },
-                {
-                    "path": "Org/Med",
-                    "probabilidad": 30
+                    "path": "Red/Big",
+                    "probabilidad": 5
                 },
                 {
                     "path": "Red/Med",
-                    "probabilidad": 30
+                    "probabilidad": 15
+                },
+                {
+                    "path": "Org/Big",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 15
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 45
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 10
                 }
             ]
         },
