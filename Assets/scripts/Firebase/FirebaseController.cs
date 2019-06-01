@@ -29,11 +29,9 @@ public static class FirebaseController
 
     private static void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
     {
-        UnityEngine.Debug.Log("Received Registration Token: " + token.Token);
         if (LoadSaveService.game.playerModel.token != token.Token)
         {
             LoadSaveService.game.playerModel.token = token.Token;
-            QueryMaster.savePlayer();
         }
 
     }
@@ -46,7 +44,6 @@ public static class FirebaseController
     public static void sendMessageTo(string tokenPerdedor, long score, string nombreGanador)
     {
         Task.Run(() => {
-            UnityEngine.Debug.Log("---------------------------sendingMessage----------------------------");
             UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
             request.SetRequestHeader("Authorization", "key=" + "AIzaSyDoicdxWevoAwew0Lky4Uv5laDBmsJEQeY");
             request.SetRequestHeader("Content-Type", "application/json");
@@ -66,7 +63,7 @@ public static class FirebaseController
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
             request.SendWebRequest();
-            UnityEngine.Debug.Log("---------------------------sended----------------------------");
+            UnityEngine.Debug.Log("Message sended to " + tokenPerdedor);
         });
     }
 }
