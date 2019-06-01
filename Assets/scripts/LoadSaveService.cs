@@ -46,14 +46,14 @@ public static class LoadSaveService
                 bool isChanged = false;
                 if (game.playerModel == null)
                 {
-                    UnityEngine.Debug.Log("Pidiendo PlayerModel");
+                    UnityEngine.Debug.Log("Juego guardado antiguo... se necesita PlayerModel");
                     game.playerModel = getPlayerModel();
                     isChanged = true;
                 }
                 if (game.onlineModel == null)
                 {
 
-                    UnityEngine.Debug.Log("Pidiendo OnlineModel");
+                    UnityEngine.Debug.Log("Juego guardado antiguo... se necesita OnlineModel");
                     game.onlineModel = getOnlineModel();
                     isChanged = true;
                 }
@@ -128,7 +128,7 @@ public static class LoadSaveService
                 game.onlineModel = QueryMaster.getFriends(SystemInfo.deviceUniqueIdentifier);
                 game.onlineModel.listFriends.ForEach(f =>
                 {
-                    if (f.maxScore > maxScore && f.maxScore < score)
+                    if (f.status != "Pending" && f.maxScore > maxScore && f.maxScore < score)
                     {
                         FirebaseController.sendMessageTo(f.token, score, game.playerModel.name);
                     }
