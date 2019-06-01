@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
             nextFire = Time.time + currentStage.fireRate;
 
             Vector3 position = randomPosition();
-            var heartPosition = heart.transform.position + new Vector3(0, 1, 0);
+            var heartPosition = heart.transform.position + new Vector3(0, 0, 0);
             Vector3 targetDir = heartPosition - position;
             var angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);

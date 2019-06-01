@@ -22,7 +22,6 @@ public class Explosion : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         this.transform.localScale = new Vector2(scaleExpl, scaleExpl);
         spriteRenderer.color = getColor(color);
-        print(GetComponent<SpriteRenderer>().color);
 
     }
 

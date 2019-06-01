@@ -31,9 +31,8 @@ public class MusicController : MonoBehaviour
 
     }
 
-    public void mute()
-    {
-        audioSource.mute = true;
+    public void muteChange( bool mute){
+        audioSource.mute = mute;
     }
 
     public void playSong(string song)

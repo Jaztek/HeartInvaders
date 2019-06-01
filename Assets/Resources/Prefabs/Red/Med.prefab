@@ -99,6 +99,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: f80d4ec85cbafc349bb7df3361630f00, type: 3}
   - {fileID: 21300000, guid: 6c1826b5f9be04748bd37f640ebedd6a, type: 3}
+  explColor: 0
 --- !u!50 &50201581787126594
 Rigidbody2D:
   serializedVersion: 4
@@ -107,7 +108,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031778161819760}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
