@@ -72,7 +72,7 @@ public class Shot : MonoBehaviour
     void OnDestroy()
     {
         GameObject explosionPrefab = (GameObject)Resources.Load("Prefabs/Expl/Explosion", typeof(GameObject));
-        explosionPrefab.GetComponent<Explosion>().setExplParams(this.transform.localScale.x*3, explColor);
+        explosionPrefab.GetComponent<Explosion>().setExplParams(this.transform.localScale.x, explColor);
         GameObject explosion = Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);
     }
 }

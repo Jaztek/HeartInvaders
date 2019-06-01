@@ -8,27 +8,15 @@
             "bullets": [
                 {
                     "path": "Red/Big",
-                    "probabilidad": 5
-                },
-                {
-                    "path": "Red/Med",
-                    "probabilidad": 15
+                    "probabilidad": 35
                 },
                 {
                     "path": "Org/Big",
-                    "probabilidad": 10
+                    "probabilidad": 30
                 },
                 {
-                    "path": "Red/Sml",
-                    "probabilidad": 15
-                },
-                {
-                    "path": "Org/Med",
-                    "probabilidad": 45
-                },
-                {
-                    "path": "Org/Sml",
-                    "probabilidad": 10
+                    "path": "Blue/Big",
+                    "probabilidad": 30
                 }
             ]
         },

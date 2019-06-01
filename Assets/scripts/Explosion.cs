@@ -18,35 +18,37 @@ public class Explosion : MonoBehaviour
 
     public void setExplParams(float scale, EnumExplColor color)
     {
-        this.transform.localScale = new Vector2(scale, scale);
-        GetComponent<SpriteRenderer>().color = getColor(color);
-         print( GetComponent<SpriteRenderer>().color);
+        float scaleExpl = scale * 2;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        this.transform.localScale = new Vector2(scaleExpl, scaleExpl);
+        spriteRenderer.color = getColor(color);
+        print(GetComponent<SpriteRenderer>().color);
 
     }
 
     public Color getColor(EnumExplColor color)
     {
-        Color colorExpl = new Color(0, 0, 255);
+        Color colorExpl = new Color32(0, 0, 255, 255);
         switch (color)
         {
             case EnumExplColor.Blue:
-                colorExpl = new Color(0, 0, 255);
+                colorExpl = new Color32(21, 30, 203, 255);
                 return colorExpl;
 
             case EnumExplColor.Red:
-                colorExpl = new Color(197, 0, 0);
+                colorExpl = new Color32(224, 97, 63, 255);
                 return colorExpl;
 
             case EnumExplColor.Orange:
-                colorExpl = new Color(191, 136, 0);
+                colorExpl = new Color32(191, 136, 0, 255);
                 return colorExpl;
 
             case EnumExplColor.White:
-                colorExpl = new Color(255, 255, 255);
+                colorExpl = new Color32(255, 255, 255, 255);
                 return colorExpl;
 
             default:
-                colorExpl =  new Color(0, 0, 255);
+                colorExpl = new Color32(0, 0, 255, 255);
                 return colorExpl;
         }
     }

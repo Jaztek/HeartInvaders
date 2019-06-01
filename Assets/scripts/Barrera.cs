@@ -11,24 +11,20 @@ public class Barrera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            Vector3 vectorCameraM = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float normalYM = vectorCameraM.y + 3.5f;
+            float normalAngleM = normalYM * 180 / 7;
+            float currentAngleM = normalAngleM + 270;
 
+            Vector2 movementM = Vector2.up;
+            movementM.x = 1 * Mathf.Cos(currentAngleM * Mathf.PI / 180) * radius;
+            movementM.y = 1 * Mathf.Sin(currentAngleM * Mathf.PI / 180) * radius;
+            barreraAzul.transform.position = movementM;
 
-        /*
-        Para el pc---
-        Vector3 vectorCameraM = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float normalYM = vectorCameraM.y + 3.5f;
-        float normalAngleM = normalYM * 180 / 7;
-        float currentAngleM = normalAngleM + 270;
-
-        Vector2 movementM = Vector2.up;
-        movementM.x = 1 * Mathf.Cos(currentAngleM * Mathf.PI / 180) * radius;
-        movementM.y = 1 * Mathf.Sin(currentAngleM * Mathf.PI / 180) * radius;
-        barreraAzul.transform.position = movementM;
-
-        barreraAzul.transform.eulerAngles = new Vector3(barreraAzul.transform.rotation.x, barreraAzul.transform.rotation.y, currentAngleM + 90);
-*/
-
-
+            barreraAzul.transform.eulerAngles = new Vector3(barreraAzul.transform.rotation.x, barreraAzul.transform.rotation.y, currentAngleM + 90);
+        }
 
         if (Input.touchCount > 0)
         {
