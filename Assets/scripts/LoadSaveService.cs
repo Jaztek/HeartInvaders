@@ -31,8 +31,7 @@ public static class LoadSaveService
 
         public static void Load()
     {
-       // File.Exists(Application.persistentDataPath + "/savedGames.gd")
-        if (false)
+        if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
             try
             {
