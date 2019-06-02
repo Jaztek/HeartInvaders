@@ -31,7 +31,8 @@ public static class LoadSaveService
 
         public static void Load()
     {
-        if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
+       // File.Exists(Application.persistentDataPath + "/savedGames.gd")
+        if (false)
         {
             try
             {
@@ -94,8 +95,8 @@ public static class LoadSaveService
         {
             playerModel = new PlayerModel();
             playerModel.deviceId = SystemInfo.deviceUniqueIdentifier;
-            //TODO: PEDIR NICKNAME
-            playerModel.name = "Nombre: " + SystemInfo.deviceUniqueIdentifier;
+            // TODO: PEDIR NICKNAME
+            // playerModel.name = "Nombre: " + SystemInfo.deviceUniqueIdentifier;
             playerModel.maxScore = 0;
         }
         return playerModel;
@@ -141,6 +142,12 @@ public static class LoadSaveService
         {
             savePlayerLocal();
         }
+    }
+
+    public static void saveNick(string nick){
+
+        game.playerModel.name = nick;
+        LoadSaveService.savePlayerRemote();
     }
 
     public static void addLifes(int lifes)

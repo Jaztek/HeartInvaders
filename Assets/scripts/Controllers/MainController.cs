@@ -12,6 +12,7 @@ public class MainController : MonoBehaviour
     public GameObject popupScore;
     public GameObject textLifes;
     public GameObject textScore;
+    public GameObject createNick;
 
     [Header("Controllers")]
     public GameController game;
@@ -28,12 +29,16 @@ public class MainController : MonoBehaviour
     void Start()
     {
         LoadSaveService.Load();
+
+        //si el jugador no tiene nombre, es porque es nuevo y debe crearselo.
+       if (LoadSaveService.game.playerModel.name == null) {
+            createNick.SetActive(true);
+       }
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
         music.playSong("casaAsteroide");
 
-        QueryMaster.test();
         FirebaseController.start();
     }
 

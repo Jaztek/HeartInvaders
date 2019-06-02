@@ -47,7 +47,7 @@ public class QueryMaster
 
     public static void addFriend(string name)
     {
-        PlayerModel friend = findFriend(name);
+        PlayerModel friend = getUserByNick(name);
         if (friend != null)
         {
             if (LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(friend.deviceId)) == null)
@@ -116,7 +116,7 @@ public class QueryMaster
         return onlineModel.FindOne(where);
     }
 
-    public static PlayerModel findFriend(string name)
+    public static PlayerModel getUserByNick(string name)
     {
         if (!isOnline())
         {
