@@ -29,7 +29,7 @@ public static class LoadSaveService
     }
 
 
-        public static void Load()
+    public static void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
@@ -101,7 +101,7 @@ public static class LoadSaveService
         return playerModel;
     }
 
-    private static OnlineModel getOnlineModel()
+    public static OnlineModel getOnlineModel()
     {
         OnlineModel onlineModel = QueryMaster.getFriends(SystemInfo.deviceUniqueIdentifier);
 
