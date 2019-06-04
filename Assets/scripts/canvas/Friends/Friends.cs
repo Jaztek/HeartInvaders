@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,8 @@ public class Friends : MonoBehaviour
 
      void OnEnable()
     {
-        List<PlayerModel> friends = LoadSaveService.getOnlineModel().listFriends;
-
+        List<string> listDeviceId = LoadSaveService.game.onlineModel.listFriends.Select(f => f.deviceId).ToList();
+        List<PlayerModel> friends = QueryMaster.getUsersByIds(listDeviceId);
         friends.ForEach(fr => {
             GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
             GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);

@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 public class QueryMaster
 {
@@ -47,30 +48,29 @@ public class QueryMaster
 
     public static void addFriend(string name)
     {
-        PlayerModel friend = getUserByNick(name);
-        if (friend != null)
+        PlayerModel friendPlayerModel = getUserByNick(name);
+        if (friendPlayerModel != null)
         {
-            if (LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(friend.deviceId)) == null)
+            if (LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(friendPlayerModel.deviceId)) == null)
             {
                 Task.Run(() =>
                 {
+                    FriendModel friend = new FriendModel();
+                    friend.deviceId = friendPlayerModel.deviceId;
                     friend.status = "Pending";
                     LoadSaveService.game.onlineModel.listFriends.Add(friend);
 
                     onlineModel = db.GetCollection<OnlineModel>("friends");
                     onlineModel.Save(LoadSaveService.game.onlineModel);
 
-                    PlayerModel meModel = new PlayerModel();
-                    meModel.name = LoadSaveService.game.playerModel.name;
-                    meModel.maxScore = LoadSaveService.game.playerModel.maxScore;
-                    meModel.token = LoadSaveService.game.playerModel.token;
-                    meModel.deviceId = LoadSaveService.game.playerModel.deviceId;
-                    meModel.Id = LoadSaveService.game.playerModel.Id;
-                    meModel.status = "Request";
+                    FriendModel me = new FriendModel();
+                    me.deviceId = LoadSaveService.game.playerModel.deviceId;
+                    me.status = "Request";
+
                     onlineModel = db.GetCollection<OnlineModel>("friends");
                     var where = new QueryDocument("deviceId", friend.deviceId);
                     OnlineModel friendOnlineModel = onlineModel.FindOne(where);
-                    friendOnlineModel.listFriends.Add(meModel);
+                    friendOnlineModel.listFriends.Add(me);
                     onlineModel.Save(friendOnlineModel);
                 });
             }
@@ -85,20 +85,21 @@ public class QueryMaster
         }
     }
 
-    public static void removeFriend(string name)
+    public static void removeFriend(string deviceId)
     {
         Task.Run(() =>
         {
-            PlayerModel oldFriend = LoadSaveService.game.onlineModel.listFriends.Find(f => f.name.Equals(name));
 
-            OnlineModel oldFriendOnlineModel = getFriends(oldFriend.deviceId);
-            PlayerModel me = oldFriendOnlineModel.listFriends.Find(f3 => f3.deviceId.Equals(LoadSaveService.game.playerModel.deviceId));
+            OnlineModel oldFriendOnlineModel = getFriends(deviceId);
+            FriendModel me = oldFriendOnlineModel.listFriends.Find(f3 => f3.deviceId.Equals(LoadSaveService.game.playerModel.deviceId));
 
             oldFriendOnlineModel.listFriends.Remove(me);
 
             onlineModel = db.GetCollection<OnlineModel>("friends");
             onlineModel.Save(oldFriendOnlineModel);
 
+
+            FriendModel oldFriend = LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(deviceId));
             LoadSaveService.game.onlineModel.listFriends.Remove(oldFriend);
             onlineModel.Save(LoadSaveService.game.onlineModel);
         });
@@ -128,6 +129,33 @@ public class QueryMaster
         return playerModel.FindOne(where);
     }
 
+    public static PlayerModel getUserById(string deviceId)
+    {
+        if (!isOnline())
+        {
+            UnityEngine.Debug.LogError("Sin conexión a BBDD");
+            return null;
+        }
+        playerModel = db.GetCollection<PlayerModel>("users");
+        var where = new QueryDocument("deviceId", deviceId);
+        return playerModel.FindOne(where);
+    }
+
+    public static List<PlayerModel> getUsersByIds(List<string> listDeviceId)
+    {
+        if (!isOnline())
+        {
+            UnityEngine.Debug.LogError("Sin conexión a BBDD");
+            return null;
+        }
+        List<BsonValue> listBson = new List<BsonValue>();
+        listDeviceId.ForEach(d => listBson.Add(BsonValue.Create(d)));
+
+        playerModel = db.GetCollection<PlayerModel>("users");
+        var where = Query.In("deviceId", listBson);
+        return playerModel.Find(where).ToList();
+    }
+
     public static void savePlayer()
     {
         Task.Run(() =>
@@ -140,18 +168,6 @@ public class QueryMaster
             {
                 playerModel = db.GetCollection<PlayerModel>("users");
                 playerModel.Save(LoadSaveService.game.playerModel);
-
-                LoadSaveService.game.onlineModel.listFriends.ForEach(f =>
-                {
-                    OnlineModel friendOnlineModel = getFriends(f.deviceId);
-                    PlayerModel me = friendOnlineModel.listFriends.Find(f3 => f3.deviceId.Equals(LoadSaveService.game.playerModel.deviceId));
-
-                    me.maxScore = LoadSaveService.game.playerModel.maxScore;
-                    me.token = LoadSaveService.game.playerModel.token;
-
-                    onlineModel = db.GetCollection<OnlineModel>("friends");
-                    onlineModel.Save(friendOnlineModel);
-                });
             }
         });
     }
@@ -167,46 +183,5 @@ public class QueryMaster
 
         var where = new QueryDocument("deviceId", SystemInfo.deviceUniqueIdentifier);
         return playerModel.FindOne(where);
-    }
-
-    public static void test()
-    {
-        Task.Run(() =>
-        {
-            playerModel = db.GetCollection<PlayerModel>("users");
-            List<PlayerModel> allPlayers = playerModel.FindAll().ToList();
-            allPlayers.ForEach(p =>
-            {
-                if (p.deviceId != SystemInfo.deviceUniqueIdentifier)
-                {
-                    if (LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(p.deviceId)) == null)
-                    {
-                        UnityEngine.Debug.Log("Agregar amigo -> " + p.name);
-                        p.status = "OK";
-                        LoadSaveService.game.onlineModel.listFriends.Add(p);
-
-                        onlineModel = db.GetCollection<OnlineModel>("friends");
-                        onlineModel.Save(LoadSaveService.game.onlineModel);
-
-                        PlayerModel meModel = new PlayerModel();
-                        meModel.name = LoadSaveService.game.playerModel.name;
-                        meModel.maxScore = LoadSaveService.game.playerModel.maxScore;
-                        meModel.token = LoadSaveService.game.playerModel.token;
-                        meModel.deviceId = LoadSaveService.game.playerModel.deviceId;
-                        meModel.Id = LoadSaveService.game.playerModel.Id;
-                        meModel.status = "OK";
-
-                        OnlineModel newOnlineModel = new OnlineModel();
-                        newOnlineModel.deviceId = p.deviceId;
-                        newOnlineModel.listFriends = new List<PlayerModel>();
-                        newOnlineModel.listFriends.Add(meModel);
-
-                        onlineModel = db.GetCollection<OnlineModel>("friends");
-                        onlineModel.Save(newOnlineModel);
-                    }
-                }
-            });
-            LoadSaveService.savePlayerLocal();
-        });
     }
 }

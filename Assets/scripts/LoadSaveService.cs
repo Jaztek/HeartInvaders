@@ -109,7 +109,7 @@ public static class LoadSaveService
         {
             onlineModel = new OnlineModel();
             onlineModel.deviceId = SystemInfo.deviceUniqueIdentifier;
-            onlineModel.listFriends = new List<PlayerModel>();
+            onlineModel.listFriends = new List<FriendModel>();
         }
         return onlineModel;
     }
@@ -125,12 +125,15 @@ public static class LoadSaveService
         {
             Task.Run(() =>
             {
-                game.onlineModel = QueryMaster.getFriends(SystemInfo.deviceUniqueIdentifier);
                 game.onlineModel.listFriends.ForEach(f =>
                 {
-                    if (f.status != "Pending" && f.maxScore > maxScore && f.maxScore < score)
+                    if (f.status != "Pending")
                     {
-                        FirebaseController.sendMessageTo(f.token, score, game.playerModel.name);
+                        PlayerModel friend = QueryMaster.getUserById(f.deviceId);
+                        if(friend.maxScore > maxScore && friend.maxScore < score)
+                        {
+                            FirebaseController.sendMessageTo(friend.token, score, game.playerModel.name);
+                        }
                     }
                 });
             });
