@@ -7,6 +7,7 @@ public class SearchFriend : MonoBehaviour
 {
     public InputField input;
     public Text ErrorText;
+    public FriendPanelController friendsPanel; 
 
     public void findFriend()
     {
@@ -27,8 +28,13 @@ public class SearchFriend : MonoBehaviour
             else
             {
                 QueryMaster.addFriend(nick);
+                refreshFriendList();
                 this.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void refreshFriendList(){
+        friendsPanel.refreshFriendList();
     }
 }

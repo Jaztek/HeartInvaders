@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BtFriends : MonoBehaviour, IPointerDownHandler
+public class BackGO : MonoBehaviour, IPointerDownHandler
 {
-    public GameObject panelFriends;
-
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-       panelFriends.SetActive(true);
+        this.transform.parent.gameObject.SetActive(false);
     }
 }

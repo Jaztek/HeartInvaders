@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BtGoToSerachFriend : MonoBehaviour, IPointerDownHandler
+public class ActiveGO : MonoBehaviour, IPointerDownHandler
 {
-   public GameObject searchFrienPanel;
+ public GameObject GOtoActive;
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        searchFrienPanel.SetActive(true);
+        GOtoActive.SetActive(true);
     }
 }

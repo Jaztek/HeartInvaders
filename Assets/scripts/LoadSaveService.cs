@@ -31,6 +31,12 @@ public static class LoadSaveService
 
     public static void Load()
     {
+        /*
+        if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
+        {
+            File.Delete(Application.persistentDataPath + "/savedGames.gd");
+        }
+         */
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
             try
