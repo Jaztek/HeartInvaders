@@ -25,7 +25,14 @@ public static class LoadSaveService
     private static void savePlayerRemote()
     {
         savePlayerLocal();
-        QueryMaster.savePlayer();
+        PlayerService.savePlayer();
+    }
+
+    private static void saveGameRemote()
+    {
+        savePlayerLocal();
+        PlayerService.savePlayer();
+        FriendService.saveFriends();
     }
 
 
@@ -94,14 +101,12 @@ public static class LoadSaveService
 
     private static PlayerModel getPlayerModel()
     {
-        PlayerModel playerModel = QueryMaster.LoadPlayer();
+        PlayerModel playerModel = PlayerService.LoadPlayer();
 
         if (playerModel == null)
         {
             playerModel = new PlayerModel();
             playerModel.deviceId = SystemInfo.deviceUniqueIdentifier;
-            // TODO: PEDIR NICKNAME
-            // playerModel.name = "Nombre: " + SystemInfo.deviceUniqueIdentifier;
             playerModel.maxScore = 0;
         }
         return playerModel;
@@ -109,7 +114,7 @@ public static class LoadSaveService
 
     public static OnlineModel getOnlineModel()
     {
-        OnlineModel onlineModel = QueryMaster.getFriends(SystemInfo.deviceUniqueIdentifier);
+        OnlineModel onlineModel = FriendService.getFriends(SystemInfo.deviceUniqueIdentifier);
 
         if (onlineModel == null)
         {
@@ -135,10 +140,10 @@ public static class LoadSaveService
                 {
                     if (f.status != "Pending")
                     {
-                        PlayerModel friend = QueryMaster.getUserById(f.deviceId);
+                        PlayerModel friend = PlayerService.getUserById(f.deviceId);
                         if(friend.maxScore > maxScore && friend.maxScore < score)
                         {
-                            FirebaseController.sendMessageTo(friend.token, score, game.playerModel.name);
+                            FirebaseController.sendMessageScoreTo(friend.token, score, game.playerModel.name);
                         }
                     }
                 });
@@ -155,7 +160,7 @@ public static class LoadSaveService
     public static void saveNick(string nick){
 
         game.playerModel.name = nick;
-        LoadSaveService.savePlayerRemote();
+        LoadSaveService.saveGameRemote();
     }
 
     public static void addLifes(int lifes)

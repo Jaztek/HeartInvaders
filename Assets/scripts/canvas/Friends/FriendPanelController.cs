@@ -30,7 +30,7 @@ public class FriendPanelController : MonoBehaviour
         List<FriendModel> listFriends = LoadSaveService.game.onlineModel.listFriends;
 
         List<string> listDeviceId = LoadSaveService.game.onlineModel.listFriends.Select(f => f.deviceId).ToList();
-        List<PlayerModel> friends = QueryMaster.getUsersByIds(listDeviceId);
+        List<PlayerModel> friends = PlayerService.getUsersByIds(listDeviceId);
         friends.ForEach(fr =>
         {
             GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));

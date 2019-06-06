@@ -28,7 +28,7 @@ public class CreateNick : MonoBehaviour
         {
             ErrorText.gameObject.SetActive(false);
 
-            PlayerModel player = QueryMaster.getUserByNick(nick);
+            PlayerModel player = PlayerService.getUserByNick(nick);
 
 
             if (player != null)

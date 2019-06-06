@@ -17,7 +17,7 @@ public class SearchFriend : MonoBehaviour
         {
             ErrorText.gameObject.SetActive(false);
 
-            PlayerModel player = QueryMaster.getUserByNick(nick);
+            PlayerModel player = PlayerService.getUserByNick(nick);
 
 
             if (player == null)
@@ -27,7 +27,7 @@ public class SearchFriend : MonoBehaviour
             }
             else
             {
-                QueryMaster.addFriend(nick);
+                FriendService.addFriend(nick);
                 refreshFriendList();
                 this.gameObject.SetActive(false);
             }

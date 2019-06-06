@@ -38,10 +38,13 @@ public static class FirebaseController
 
     private static void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
     {
-        UnityEngine.Debug.Log("Received a new message from: " + e.Message.From);
+        if(e.Message.Notification.Title.Contains("friend request"))
+        {
+            UnityEngine.Debug.Log("Friend request: " + e.Message.Notification.Title);
+        }
     }
 
-    public static void sendMessageTo(string tokenPerdedor, long score, string nombreGanador)
+    public static void sendMessageScoreTo(string tokenPerdedor, long score, string nombreGanador)
     {
         Task.Run(() => {
             UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
@@ -50,8 +53,8 @@ public static class FirebaseController
             request.SetRequestHeader("Cache-Control", "no-cache");
 
             NotificationModel notification = new NotificationModel();
-            notification.title = nombreGanador + " te ha superado con " + score + " puntos! 😯";
-            notification.body = "Juega para superarle! 🕹";
+            notification.title = nombreGanador + " has overtaken you with " + score + " points! 😯";
+            notification.body = "Play to beat him! 🕹";
 
             FirebaseModel firebaseModel = new FirebaseModel();
             firebaseModel.to = tokenPerdedor;
@@ -64,6 +67,32 @@ public static class FirebaseController
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
             request.SendWebRequest();
             UnityEngine.Debug.Log("Message sended to " + tokenPerdedor);
+        });
+    }
+
+    public static void sendMessageFriendTo(string tokenAmigo)
+    {
+        Task.Run(() => {
+            UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
+            request.SetRequestHeader("Authorization", "key=" + "AIzaSyDoicdxWevoAwew0Lky4Uv5laDBmsJEQeY");
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Cache-Control", "no-cache");
+
+            NotificationModel notification = new NotificationModel();
+            notification.title = LoadSaveService.game.playerModel.name + " sent you a friend request 😃";
+            notification.body = "Click to see it!";
+
+            FirebaseModel firebaseModel = new FirebaseModel();
+            firebaseModel.to = tokenAmigo;
+            firebaseModel.notification = notification;
+
+            string json = JsonUtility.ToJson(firebaseModel);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SendWebRequest();
+            UnityEngine.Debug.Log("Message sended to " + tokenAmigo);
         });
     }
 }
