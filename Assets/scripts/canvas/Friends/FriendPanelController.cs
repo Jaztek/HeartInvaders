@@ -26,18 +26,22 @@ public class FriendPanelController : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
-
+        LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
         List<FriendModel> listFriends = LoadSaveService.game.onlineModel.listFriends;
 
-        List<string> listDeviceId = LoadSaveService.game.onlineModel.listFriends.Select(f => f.deviceId).ToList();
-        List<PlayerModel> friends = PlayerService.getUsersByIds(listDeviceId);
-        friends.ForEach(fr =>
+        if (listFriends.Count > 0)
         {
-            GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
-            GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
-            string status = listFriends.Find(Onlinefr => Onlinefr.deviceId == fr.deviceId).status;
-            panelFriend.transform.parent = friendTable.transform;
-            panelFriend.GetComponent<FriendSingle>().setFriend(fr.name, fr.maxScore.ToString(), status);
-        });
+
+            List<string> listDeviceId = LoadSaveService.game.onlineModel.listFriends.Select(f => f.deviceId).ToList();
+            List<PlayerModel> friends = PlayerService.getUsersByIds(listDeviceId);
+            friends.ForEach(fr =>
+            {
+                GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
+                GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
+                string status = listFriends.Find(Onlinefr => Onlinefr.deviceId == fr.deviceId).status;
+                panelFriend.transform.parent = friendTable.transform;
+                panelFriend.GetComponent<FriendSingle>().setFriend(fr.name, fr.maxScore.ToString(), status);
+            });
+        }
     }
 }
