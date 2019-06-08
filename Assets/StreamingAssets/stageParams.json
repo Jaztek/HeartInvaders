@@ -8,14 +8,22 @@
             "bullets": [
                 {
                     "path": "Red/Big",
-                    "probabilidad": 35
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 10
                 },
                 {
                     "path": "Org/Big",
-                    "probabilidad": 35
+                    "probabilidad": 20
                 },
                 {
-                    "path": "Blue/Big",
+                    "path": "Red/Sml",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Org/Med",
                     "probabilidad": 30
                 }
             ]

@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
         {
             nextFire = Time.time + currentStage.fireRate;
 
-            Vector3 position = randomPosition();
+            Vector3 position = RandomPosition.randomPosition();
             var heartPosition = heart.transform.position + new Vector3(0, 0, 0);
             Vector3 targetDir = heartPosition - position;
             var angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
@@ -76,48 +76,6 @@ public class GameController : MonoBehaviour
         }
         return path;
     }
-    private Vector3 randomPosition()
-    {
-        var x = randomPositionX();
-        var y = randomPositionY(x);
-        //new Vector3(x, y)
-        return new Vector3(x, y);
-    }
-    private int randomPositionY(int x)
-    {
-        if ((x >= -6 && x <= 6))
-        {
-            var y = Random.Range(0, 2);
-            if (y == 0)
-            {
-                y = y - 4;
-            }
-            else if (y == 1)
-            {
-                y = y + 3;
-            }
-            return y;
-        }
-        else
-        {
-            return Random.Range(-4, 5);
-        }
-    }
-    private int randomPositionX()
-    {
-        var x = Random.Range(-5, 6);
-        if (x < 0)
-        {
-            x = x - 2;
-        }
-        if (x >= 0)
-        {
-            x = x + 2;
-        }
-        return x;
-    }
-
-
 
     ///////////////////////////// ---- Functions ----///////////////////////////////////////////
 
