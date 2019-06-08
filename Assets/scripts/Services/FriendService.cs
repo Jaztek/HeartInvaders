@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 public class FriendService
 {
-    public static void addFriend(string name)
+    public static void requestFriend(string name)
     {
         PlayerModel friendPlayerModel = PlayerService.getUserByNick(name);
         if (friendPlayerModel != null)
@@ -27,9 +27,10 @@ public class FriendService
                     var where = new QueryDocument("deviceId", friend.deviceId);
                     OnlineModel friendOnlineModel = QueryMaster.onlineModel.FindOne(where);
                     friendOnlineModel.listFriends.Add(me);
+                    friendOnlineModel.pendingFriends = true;
                     QueryMaster.onlineModel.Save(friendOnlineModel);
 
-                    FirebaseController.sendMessageFriendTo(friendPlayerModel.token);
+                    FirebaseController.sendMessageRequestFriend(friendPlayerModel.token);
                 });
             }
             else
@@ -43,7 +44,7 @@ public class FriendService
         }
     }
 
-    public static void removeFriend(string deviceId)
+    public static void rejectedFriend(string deviceId)
     {
         Task.Run(() =>
         {
@@ -60,6 +61,39 @@ public class FriendService
             FriendModel oldFriend = LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(deviceId));
             LoadSaveService.game.onlineModel.listFriends.Remove(oldFriend);
             QueryMaster.onlineModel.Save(LoadSaveService.game.onlineModel);
+
+            PlayerModel oldFriendPlayerModel = PlayerService.getUserById(oldFriend.deviceId);
+            FirebaseController.sendMessageRejectedFriend(oldFriendPlayerModel.token);
+        });
+    }
+
+    public static void acceptFriend(string deviceId)
+    {
+        Task.Run(() =>
+        {
+
+            OnlineModel newFriendOnlineModel = getFriends(deviceId);
+            FriendModel me = newFriendOnlineModel.listFriends.Find(f3 => f3.deviceId.Equals(LoadSaveService.game.playerModel.deviceId));
+
+            newFriendOnlineModel.listFriends.Remove(me);
+
+            me.status = "OK";
+            newFriendOnlineModel.listFriends.Add(me);
+
+            QueryMaster.onlineModel = QueryMaster.db.GetCollection<OnlineModel>("friends");
+            QueryMaster.onlineModel.Save(newFriendOnlineModel);
+
+
+            FriendModel newFriend = LoadSaveService.game.onlineModel.listFriends.Find(f => f.deviceId.Equals(deviceId));
+            LoadSaveService.game.onlineModel.listFriends.Remove(newFriend);
+
+            newFriend.status = "OK";
+            LoadSaveService.game.onlineModel.listFriends.Add(newFriend);
+
+            QueryMaster.onlineModel.Save(LoadSaveService.game.onlineModel);
+
+            PlayerModel newFriendPlayerModel = PlayerService.getUserById(newFriend.deviceId);
+            FirebaseController.sendMessageAcceptFriend(newFriendPlayerModel.token);
         });
     }
 

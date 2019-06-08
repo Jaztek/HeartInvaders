@@ -56,25 +56,13 @@ public static class LoadSaveService
 
                 game = gameModel;
 
-                bool isChanged = false;
                 if (game.playerModel == null)
                 {
-                    UnityEngine.Debug.Log("Juego guardado antiguo... se necesita PlayerModel");
                     game.playerModel = getPlayerModel();
-                    isChanged = true;
-                }
-                if (game.onlineModel == null)
-                {
-
-                    UnityEngine.Debug.Log("Juego guardado antiguo... se necesita OnlineModel");
-                    game.onlineModel = getOnlineModel();
-                    isChanged = true;
                 }
 
-                if (isChanged)
-                {
-                    savePlayerLocal();
-                }
+                game.onlineModel = getOnlineModel();
+                savePlayerLocal();
             }
             catch (System.Exception)
             {

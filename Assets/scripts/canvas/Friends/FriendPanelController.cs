@@ -19,7 +19,6 @@ public class FriendPanelController : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
-        LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
         List<FriendModel> listFriends = LoadSaveService.game.onlineModel.listFriends;
 
         if (listFriends.Count > 0)

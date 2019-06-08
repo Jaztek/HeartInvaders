@@ -33,7 +33,7 @@ public class SearchFriend : MonoBehaviour
             }
             else
             {
-                FriendService.addFriend(nick);
+                FriendService.requestFriend(nick);
                 refreshFriendList();
                 this.gameObject.SetActive(false);
             }

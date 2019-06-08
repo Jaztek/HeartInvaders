@@ -11,7 +11,7 @@ public static class FirebaseController
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             var dependencyStatus = task.Result;
-        
+
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
                 Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
@@ -38,15 +38,19 @@ public static class FirebaseController
 
     private static void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
     {
-        if(e.Message.Notification.Title.Contains("friend request"))
+        if (e.Message.Notification.Title.Contains("friend request"))
         {
-            UnityEngine.Debug.Log("Friend request: " + e.Message.Notification.Title);
+            Task.Run(() =>
+            {
+                LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
+            });
         }
     }
 
     public static void sendMessageScoreTo(string tokenPerdedor, long score, string nombreGanador)
     {
-        Task.Run(() => {
+        Task.Run(() =>
+        {
             UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
             request.SetRequestHeader("Authorization", "key=" + "AIzaSyDoicdxWevoAwew0Lky4Uv5laDBmsJEQeY");
             request.SetRequestHeader("Content-Type", "application/json");
@@ -70,9 +74,10 @@ public static class FirebaseController
         });
     }
 
-    public static void sendMessageFriendTo(string tokenAmigo)
+    public static void sendMessageRequestFriend(string tokenAmigo)
     {
-        Task.Run(() => {
+        Task.Run(() =>
+        {
             UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
             request.SetRequestHeader("Authorization", "key=" + "AIzaSyDoicdxWevoAwew0Lky4Uv5laDBmsJEQeY");
             request.SetRequestHeader("Content-Type", "application/json");
@@ -80,6 +85,60 @@ public static class FirebaseController
 
             NotificationModel notification = new NotificationModel();
             notification.title = LoadSaveService.game.playerModel.name + " sent you a friend request 😃";
+            notification.body = "Click to see it!";
+
+            FirebaseModel firebaseModel = new FirebaseModel();
+            firebaseModel.to = tokenAmigo;
+            firebaseModel.notification = notification;
+
+            string json = JsonUtility.ToJson(firebaseModel);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SendWebRequest();
+            UnityEngine.Debug.Log("Message sended to " + tokenAmigo);
+        });
+    }
+
+    public static void sendMessageRejectedFriend(string tokenAmigo)
+    {
+        Task.Run(() =>
+        {
+            UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
+            request.SetRequestHeader("Authorization", "key=" + "AIzaSyDoicdxWevoAwew0Lky4Uv5laDBmsJEQeY");
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Cache-Control", "no-cache");
+
+            NotificationModel notification = new NotificationModel();
+            notification.title = LoadSaveService.game.playerModel.name + " has rejected your friend request 😔";
+            notification.body = "Click to see it!";
+
+            FirebaseModel firebaseModel = new FirebaseModel();
+            firebaseModel.to = tokenAmigo;
+            firebaseModel.notification = notification;
+
+            string json = JsonUtility.ToJson(firebaseModel);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SendWebRequest();
+            UnityEngine.Debug.Log("Message sended to " + tokenAmigo);
+        });
+    }
+
+    public static void sendMessageAcceptFriend(string tokenAmigo)
+    {
+        Task.Run(() =>
+        {
+            UnityWebRequest request = new UnityWebRequest("https://fcm.googleapis.com/fcm/send", "POST");
+            request.SetRequestHeader("Authorization", "key=" + "AIzaSyDoicdxWevoAwew0Lky4Uv5laDBmsJEQeY");
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Cache-Control", "no-cache");
+
+            NotificationModel notification = new NotificationModel();
+            notification.title = LoadSaveService.game.playerModel.name + " has accepted your friend request 😃";
             notification.body = "Click to see it!";
 
             FirebaseModel firebaseModel = new FirebaseModel();
