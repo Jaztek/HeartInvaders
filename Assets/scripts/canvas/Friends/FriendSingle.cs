@@ -5,27 +5,22 @@ using UnityEngine.UI;
 
 public class FriendSingle : MonoBehaviour
 {
+    public Text position;
     public Text nameFriend;
     public Text scoreFriend;
-    public GameObject panelRequest;
-    public GameObject panelPending;
-     public GameObject panelAccepted;
+    public Color color;
 
-    public void setFriend(string name, string score, string status){
+    public void setFriend(int pos, string name, string score, bool isPlayer){
         nameFriend.text = name;
         scoreFriend.text = score;
+        position.text = pos +":";
 
-        switch (status)
+        if (isPlayer)
         {
-            case "Request":
-                panelRequest.SetActive(true);
-                break;
-            case "Pending":
-                panelPending.SetActive(true);
-                break;
-            case "OK":
-                 panelAccepted.SetActive(true);
-                break;
+            nameFriend.color = color;
+            scoreFriend.color = color;
+            position.color = color;
         }
+
     }
 }

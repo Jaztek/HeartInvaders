@@ -9,6 +9,12 @@ public class SearchFriend : MonoBehaviour
     public Text ErrorText;
     public FriendPanelController friendsPanel; 
 
+    void OnEnable()
+    {
+        input.text = "";
+         ErrorText.gameObject.SetActive(false);
+    }
+
     public void findFriend()
     {
 

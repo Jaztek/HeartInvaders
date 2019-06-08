@@ -7,17 +7,10 @@ using UnityEngine.UI;
 public class FriendPanelController : MonoBehaviour
 {
     public GameObject friendTable;
-    public Text name;
-
-    void Start()
-    {
-        name.text = LoadSaveService.game.playerModel.name;
-    }
 
     void OnEnable()
     {
         refreshFriendList();
-
     }
 
     public void refreshFriendList()
@@ -34,14 +27,34 @@ public class FriendPanelController : MonoBehaviour
 
             List<string> listDeviceId = LoadSaveService.game.onlineModel.listFriends.Select(f => f.deviceId).ToList();
             List<PlayerModel> friends = PlayerService.getUsersByIds(listDeviceId);
+            friends.Add(LoadSaveService.game.playerModel);
+            friends.Sort((friend1,friend2) => friend2.maxScore.CompareTo(friend1.maxScore));
+            int pos = 1;
+            string idPlayer = LoadSaveService.game.playerModel.deviceId;
             friends.ForEach(fr =>
             {
                 GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
                 GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
-                string status = listFriends.Find(Onlinefr => Onlinefr.deviceId == fr.deviceId).status;
                 panelFriend.transform.parent = friendTable.transform;
-                panelFriend.GetComponent<FriendSingle>().setFriend(fr.name, fr.maxScore.ToString(), status);
+
+                bool isPlayer = fr.deviceId == idPlayer ? true : false;
+                panelFriend.GetComponent<FriendSingle>().setFriend(pos, fr.name, fr.maxScore.ToString(), isPlayer);
+                pos++;
             });
         }
     }
+   class GFG : IComparer<int> 
+{ 
+    public int Compare(int x, int y) 
+    { 
+        if (x == 0 || y == 0) 
+        { 
+            return 0; 
+        } 
+          
+        // CompareTo() method 
+        return x.CompareTo(y); 
+          
+    } 
+} 
 }
