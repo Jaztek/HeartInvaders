@@ -24,12 +24,8 @@ public class FriendRSingle : MonoBehaviour
         } else {
             FriendService.rejectedFriend(friendDeviceID);
         }
-        Destroy(this.gameObject);
+         GameObject.Find("FriendsCanvas").GetComponent<FriendPanelController>().refreshFriendList();
+         Destroy(this.gameObject);
     }
 
-    void OnDestroy()
-    {
-        GameObject.Find("FriendsCanvas").GetComponent<FriendPanelController>()
-        .refreshFriendList();
-    }
 }
