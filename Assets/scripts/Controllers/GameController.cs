@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
             var angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/" + getBullet(), typeof(GameObject));
+            GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Bullets/" + getBullet(), typeof(GameObject));
 
             GameObject shotClone = Instantiate(variableForPrefab, position, rotation);
         }

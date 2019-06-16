@@ -46,12 +46,6 @@ public class Shot : MonoBehaviour
         }
     }
 
-
-    public void start()
-    {
-        StartCoroutine("counter");
-    }
-
     IEnumerator spriteChange()
     {
         for (; ; )
@@ -71,6 +65,9 @@ public class Shot : MonoBehaviour
 
     void OnDestroy()
     {
+        if(transform.parent != null && transform.parent.childCount == 0){
+             Destroy(transform.parent.gameObject);
+        }
         GameObject explosionPrefab = (GameObject)Resources.Load("Prefabs/Expl/Explosion", typeof(GameObject));
         explosionPrefab.GetComponent<Explosion>().setExplParams(this.transform.localScale.x, explColor);
         GameObject explosion = Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);

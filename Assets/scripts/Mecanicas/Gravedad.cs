@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gravity : MonoBehaviour
+public class Gravedad : MonoBehaviour
 {
-    public Transform target; // Big object
+   private Transform target; // Big object
     Vector3 targetDirection;
 
     public int radius = 5;
     public int forceAmount = 100;
     public float gravity = 0;
+    public bool isEnabled = true;
     private Rigidbody2D rb;
 
     public float speed;
@@ -18,6 +19,7 @@ public class Gravity : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        // pinta en debug el radio de fuerza de la gravedad
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
@@ -27,12 +29,15 @@ public class Gravity : MonoBehaviour
     {
         Physics.gravity = new Vector3(0, gravity, 0);
         rb = GetComponent<Rigidbody2D>();
-          rb.AddForce(Vector3.right * speed);
+
+        target = GameObject.FindWithTag("Player").transform;
     }
 
-    // Update is called once per frame
+     // Update is called once per frame
     void Update()
     {
+        if(!isEnabled) {return;};
+
 
         targetDirection = target.position - transform.position; // Save direction
         distance = targetDirection.magnitude; // Find distance between this object and target object
@@ -42,10 +47,8 @@ public class Gravity : MonoBehaviour
         {
             rb.AddForce(targetDirection * forceAmount * Time.deltaTime);
         }
-
-         //rb.velocity = transform.TransformDirection(Vector3.right * speed);
-          
-            print(rb.velocity);
+        print(rb.velocity);
 
     }
+
 }
