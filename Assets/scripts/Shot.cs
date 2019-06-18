@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shot : MonoBehaviour
+public class Shot : MonoBehaviour, BulletInterface
 {
 
     public int speed = 7;
@@ -34,14 +34,18 @@ public class Shot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        onTriggerEnter(other);
+    }
+    public virtual void onTriggerEnter(Collider2D other)
+    {
         if (other.CompareTag("barrera"))
         {
-            Destroy(this.gameObject);
+            destroy();
             gameController.scored();
         }
         if (other.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
+            destroy();
             gameController.damage();
         }
     }
@@ -63,13 +67,17 @@ public class Shot : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+
+
+    public virtual void destroy()
     {
-        if(transform.parent != null && transform.parent.childCount == 0){
-             Destroy(transform.parent.gameObject);
+        if (transform.parent != null && transform.parent.childCount == 0)
+        {
+            Destroy(transform.parent.gameObject);
         }
         GameObject explosionPrefab = (GameObject)Resources.Load("Prefabs/Expl/Explosion", typeof(GameObject));
         explosionPrefab.GetComponent<Explosion>().setExplParams(this.transform.localScale.x, explColor);
         GameObject explosion = Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);
+        Destroy(this.gameObject);
     }
 }
