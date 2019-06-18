@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GoogleMobileAds.Api;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,15 +32,17 @@ public class MainController : MonoBehaviour
         LoadSaveService.Load();
 
         //si el jugador no tiene nombre, es porque es nuevo y debe crearselo.
-       if (LoadSaveService.game.playerModel.name == null) {
+        if (LoadSaveService.game.playerModel.name == null)
+        {
             createNick.SetActive(true);
-       }
+        }
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
         music.playSong("casaAsteroide");
 
         FirebaseController.start();
+        AdmobController.start();
     }
 
     private void generateHeartsLifes()
@@ -105,14 +108,45 @@ public class MainController : MonoBehaviour
 
     public void setLifesTo(int lifes)
     {
-        LoadSaveService.addLifes(lifes);
+        if (AdmobController.rewardedLifeAd.IsLoaded())
+        {
+            AdmobController.rewardedLifeAd.Show();
+        }
+        else
+        {
+            LoadSaveService.addLifes(lifes);
+        }
         generateHeartsLifes();
         updateCanvas();
     }
 
     public void addBoms(int boms)
     {
-        LoadSaveService.addBoms(boms);
+        if (AdmobController.rewardedBombAd.IsLoaded())
+        {
+            AdmobController.rewardedBombAd.Show();
+        }
+        else
+        {
+            LoadSaveService.addBoms(boms);
+        }
+    }
+
+    void OnEnable()
+    {
+        mainCanvas.GetComponent<CanvasGroup>().alpha = 0f;
+        StartCoroutine("fadeInMenu");
+    }
+
+    IEnumerator fadeInMenu()
+    {
+        yield return new WaitForSeconds(3f);
+        for (float alpha = 0f; alpha < 1f; alpha = alpha + 0.05f)
+        {
+            mainCanvas.GetComponent<CanvasGroup>().alpha = alpha;
+            yield return new WaitForSeconds(0.1f);
+        }
+
     }
 }
 
