@@ -45,7 +45,7 @@ public class MainController : MonoBehaviour
         AdmobController.start();
     }
 
-    private void generateHeartsLifes()
+    public void generateHeartsLifes()
     {
         foreach (Transform child in lifeHeartContainer.transform)
         {
@@ -115,9 +115,9 @@ public class MainController : MonoBehaviour
         else
         {
             LoadSaveService.addLifes(lifes);
+            generateHeartsLifes();
+            updateCanvas();
         }
-        generateHeartsLifes();
-        updateCanvas();
     }
 
     public void addBoms(int boms)
@@ -140,7 +140,7 @@ public class MainController : MonoBehaviour
 
     IEnumerator fadeInMenu()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         for (float alpha = 0f; alpha < 1f; alpha = alpha + 0.05f)
         {
             mainCanvas.GetComponent<CanvasGroup>().alpha = alpha;

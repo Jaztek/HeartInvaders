@@ -13,8 +13,11 @@ public static class AdmobController
     private static string lifeAdId = "ca-app-pub-3940256099942544/5224354917";
     private static string bombAdId = "ca-app-pub-3940256099942544/5224354917";
 
+    private static MainController mainController;
+
     public static void start()
     {
+        mainController = GameObject.Find("MainController").GetComponent<MainController>();
         MobileAds.Initialize(appId);
         loadLifeAd();
         loadBombAd();
@@ -49,7 +52,10 @@ public static class AdmobController
 
     public static void LifeEarnedReward(object sender, Reward args)
     {
-        LoadSaveService.addLifes(Convert.ToInt32(args.Amount));
+        //Convert.ToInt32(args.Amount)
+        LoadSaveService.addLifes(10);
+        mainController.generateHeartsLifes();
+        mainController.updateCanvas();
     }
     public static void LifeAdClosed(object sender, EventArgs args)
     {
@@ -64,7 +70,8 @@ public static class AdmobController
 
     public static void BombEarnedReward(object sender, Reward args)
     {
-        LoadSaveService.addBoms(Convert.ToInt32(args.Amount));
+        //Convert.ToInt32(args.Amount)
+        LoadSaveService.addBoms(3);
     }
     public static void BombAdClosed(object sender, EventArgs args)
     {
