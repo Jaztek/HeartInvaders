@@ -5,8 +5,14 @@ using UnityEngine.EventSystems;
 
 public class BackGO : MonoBehaviour, IPointerDownHandler
 {
+     public GameObject GOtoInactive;
+
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        this.transform.parent.gameObject.SetActive(false);
+        if(GOtoInactive == null){
+            this.transform.parent.gameObject.SetActive(false);
+        } else {
+            GOtoInactive.gameObject.SetActive(false);
+        }
     }
 }
