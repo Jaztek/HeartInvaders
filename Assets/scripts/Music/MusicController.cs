@@ -18,6 +18,10 @@ public class MusicController : MonoBehaviour
     private float startVolume;
 
 
+    void Update()
+    {
+            print(audioSource.timeSamples);
+    }
     void Awake()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -64,6 +68,8 @@ public class MusicController : MonoBehaviour
 
         }
         audioSource.Play();
+
+       
 
     }
 

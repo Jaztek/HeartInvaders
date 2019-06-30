@@ -99,7 +99,8 @@ public class MainController : MonoBehaviour
 
     public void backToMenu(long score, int stage)
     {
-        LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
+        // en esta version no se perderan ni vidas ni bombas.
+        LoadSaveService.saveCurrentGame(0, score, stage, 3);
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
@@ -140,11 +141,11 @@ public class MainController : MonoBehaviour
 
     IEnumerator fadeInMenu()
     {
-        yield return new WaitForSeconds(2f);
-        for (float alpha = 0f; alpha < 1f; alpha = alpha + 0.05f)
+        yield return new WaitForSeconds(1f);
+        for (float alpha = 0f; alpha < 1f; alpha = alpha + 0.03f)
         {
             mainCanvas.GetComponent<CanvasGroup>().alpha = alpha;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.08f);
         }
 
     }

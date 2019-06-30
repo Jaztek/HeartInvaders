@@ -93,6 +93,9 @@ public class GameController : MonoBehaviour
         {
             currentStage = stages.stagesList[currentStage.stage + 1];
             changeStage(currentStage);
+
+            // al pasar de stage, eliminamos el tutorial.
+            tutoCanvas.SetActive(false);
         }
     }
 
@@ -111,6 +114,7 @@ public class GameController : MonoBehaviour
         destroyAllBullets();
         music.stopMusic();
         popup.SetActive(true);
+        tutoCanvas.SetActive(false);
         popup.GetComponent<PopupScore>().setData(scoreController.getScore(), currentStage.stage);
     }
     public void restart()
@@ -120,11 +124,11 @@ public class GameController : MonoBehaviour
         scoreController.restartScore();
         bombs.setBombs(player.getBombs());
 
+        StartCoroutine("delayStartGame");
         if (currentStage.stage == 0)
         {
             tutoCanvas.SetActive(true);
         }
-        StartCoroutine("delayStartGame");
     }
 
     IEnumerator delayStartGame()
