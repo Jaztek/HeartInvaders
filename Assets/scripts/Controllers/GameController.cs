@@ -116,6 +116,12 @@ public class GameController : MonoBehaviour
         popup.SetActive(true);
         tutoCanvas.SetActive(false);
         popup.GetComponent<PopupScore>().setData(scoreController.getScore(), currentStage.stage);
+
+        if (player.getGameModel() != null && scoreController.getScore() > player.getGameModel().playerModel.maxScore) {
+            music.playSong("victoria");
+        } else if (player.getGameModel() != null) {
+            music.playSong("gameOver");
+        }
     }
     public void restart()
     {

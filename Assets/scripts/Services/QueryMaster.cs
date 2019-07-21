@@ -33,6 +33,7 @@ public class QueryMaster
         }
         catch (Exception e)
         {
+            UnityEngine.Debug.LogError(e.Message);
             socket.Close();
             return false;
         }

@@ -75,6 +75,7 @@
         {
             "stage": 5,
             "fireRate": 1.5,
+            "music": "enemigosBoss",
             "maxScore": 150,
             "bullets": [
                 {
@@ -98,6 +99,7 @@
         {
             "stage": 6,
             "fireRate": 1,
+            "music": "enemigos",
             "maxScore": 180,
             "bullets": [
                 {
@@ -189,7 +191,7 @@
         },
         {
             "stage": 10,
-          
+            "music": "enemigosBoss",
             "fireRate": 0.5,
             "maxScore": 400,
             "bullets": [
@@ -222,6 +224,7 @@
         {
             "stage": 11,
             "fireRate": 0.7,
+            "music": "enemigos",
             "maxScore": 430,
             "bullets": [
                 {
@@ -302,15 +305,113 @@
         {
             "stage": 15,
             "fireRate": 0.5,
-            "maxScore": 600,
+            "music": "enemigosBoss",
+            "maxScore": 700,
             "bullets": [
                 {
                     "path": "Blue/Big",
+                    "probabilidad": 100
+                }
+            ]
+        },
+        {
+            "stage": 16,
+            "fireRate": 1,
+            "music": "enemigos",
+            "maxScore": 750,
+            "bullets": [
+                {
+                    "path": "Met/Reb",
+                    "probabilidad": 100
+                }
+            ]
+        },
+        {
+            "stage": 17,
+            "fireRate": 1,
+            "maxScore": 850,
+            "bullets": [
+                {
+                    "path": "Met/Reb",
+                    "probabilidad": 50
+                },
+                {
+                    "path": "Red/Big",
                     "probabilidad": 30
                 },
                 {
-                    "path": "Blue/Med",
+                    "path": "Org/Big",
+                    "probabilidad": 20
+                }
+            ]
+        },
+        {
+            "stage": 18,
+            "fireRate": 1,
+            "maxScore": 1000,
+            "bullets": [
+                {
+                    "path": "Met/Reb",
+                    "probabilidad": 50
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 10
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 20
+                }
+            ]
+        },
+        {
+            "stage": 19,
+            "fireRate": 0.7,
+            "maxScore": 1150,
+            "bullets": [
+                {
+                    "path": "Met/Reb",
                     "probabilidad": 30
+                },
+                {
+                    "path": "Red/Med",
+                    "probabilidad": 20
+                },
+                {
+                    "path": "Org/Med",
+                    "probabilidad": 30
+                },
+                {
+                    "path": "Red/Big",
+                    "probabilidad": 20
+                }
+            ]
+        },
+        {
+            "stage": 20,
+            "fireRate": 0.6,
+            "music": "enemigosBoss",
+            "maxScore": 1300,
+            "bullets": [
+                {
+                    "path": "Met/Reb",
+                    "probabilidad": 100
+                }
+            ]
+        },
+        {
+            "stage": 999,
+            "fireRate": 0.6,
+            "music": "enemigosBoss",
+            "maxScore": 1300,
+            "bullets": [
+                {
+                    "path": "Met/Reb",
+                    "probabilidad": 20
+                },
+                {
+                    "path": "Blue/Big",
+                    "probabilidad": 10
                 },
                 {
                     "path": "Org/Big",
@@ -322,11 +423,19 @@
                 },
                 {
                     "path": "Org/Med",
-                    "probabilidad": 10
+                    "probabilidad": 15
                 },
                 {
                     "path": "Red/Med",
-                    "probabilidad": 10
+                    "probabilidad": 15
+                },
+                {
+                    "path": "Red/Sml",
+                    "probabilidad": 5
+                },
+                {
+                    "path": "Org/Sml",
+                    "probabilidad": 5
                 }
             ]
         }

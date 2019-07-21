@@ -18,10 +18,6 @@ public class MusicController : MonoBehaviour
     private float startVolume;
 
 
-    void Update()
-    {
-            print(audioSource.timeSamples);
-    }
     void Awake()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -41,6 +37,7 @@ public class MusicController : MonoBehaviour
 
     public void playSong(string song)
     {
+        audioSource.loop = true;
         fadingOut = false;
         switch (song)
         {
@@ -52,9 +49,11 @@ public class MusicController : MonoBehaviour
                 break;
             case "victoria":
                 audioSource.clip = victoria;
+                audioSource.loop = false;
                 break;
             case "gameOver":
                 audioSource.clip = gameOver;
+                 audioSource.loop = false;
                 break;
             case "enemigosMisterioso":
                 audioSource.clip = enemigosMisterioso;

@@ -43,10 +43,13 @@ public class MainController : MonoBehaviour
 
         FirebaseController.start();
         AdmobController.start();
+
+       
     }
 
     public void generateHeartsLifes()
     {
+         UtilsLifeCalc.calcLifes();
         foreach (Transform child in lifeHeartContainer.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -100,7 +103,7 @@ public class MainController : MonoBehaviour
     public void backToMenu(long score, int stage)
     {
         // en esta version no se perderan ni vidas ni bombas.
-        LoadSaveService.saveCurrentGame(0, score, stage, 3);
+        LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
         generateHeartsLifes();
         updateCanvas();
         restartMenu();

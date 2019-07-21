@@ -44,6 +44,7 @@ public static class LoadSaveService
             File.Delete(Application.persistentDataPath + "/savedGames.gd");
         }
          */
+         
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
             try
@@ -56,13 +57,12 @@ public static class LoadSaveService
 
                 game = gameModel;
 
-                if (game.playerModel == null)
-                {
-                    game.playerModel = getPlayerModel();
-                }
+                if (game.playerModel == null) {  game.playerModel = getPlayerModel();}
 
                 game.onlineModel = getOnlineModel();
                 savePlayerLocal();
+
+                UnityEngine.Debug.Log(gameModel.dateLastLife);
             }
             catch (System.Exception)
             {
@@ -82,6 +82,11 @@ public static class LoadSaveService
         game.lifes = 10;
         game.bombs = 2;
         game.maxStage = 0;
+
+        game.nextStage = 0;
+        game.isMute = false;
+        game.dateLastLife  = DateTime.Now;
+
         game.playerModel = getPlayerModel();
         game.onlineModel = getOnlineModel();
         savePlayerLocal();

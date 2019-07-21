@@ -9,17 +9,6 @@ public class PopupScore : MonoBehaviour
     public GameObject score;
     public GameObject stage;
     public progresBar progres;
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void setData(long scoreData, int stageData)
     {
