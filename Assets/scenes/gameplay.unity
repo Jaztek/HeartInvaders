@@ -1979,7 +1979,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &522839418
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4871,6 +4871,7 @@ MonoBehaviour:
   textLifes: {fileID: 688418356}
   textScore: {fileID: 1236841504}
   createNick: {fileID: 575981320}
+  muteCanvas: {fileID: 749959423}
   game: {fileID: 230567710}
   player: {fileID: 2077585801}
   cameraController: {fileID: 183055220}

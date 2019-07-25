@@ -14,6 +14,7 @@ public class MainController : MonoBehaviour
     public GameObject textLifes;
     public GameObject textScore;
     public GameObject createNick;
+    public Mute muteCanvas;
 
     [Header("Controllers")]
     public GameController game;
@@ -30,7 +31,7 @@ public class MainController : MonoBehaviour
     void Start()
     {
         LoadSaveService.Load();
-
+        muteCanvas.init();
         //si el jugador no tiene nombre, es porque es nuevo y debe crearselo.
         if (LoadSaveService.game.playerModel.name == null)
         {
@@ -43,8 +44,6 @@ public class MainController : MonoBehaviour
 
         FirebaseController.start();
         AdmobController.start();
-
-       
     }
 
     public void generateHeartsLifes()
@@ -96,13 +95,15 @@ public class MainController : MonoBehaviour
 
     public void updateCanvas()
     {
+
         textLifes.GetComponent<Text>().text = LoadSaveService.game.lifes.ToString();
         textScore.GetComponent<Text>().text = LoadSaveService.game.playerModel.maxScore.ToString("0000000");
     }
 
     public void backToMenu(long score, int stage)
     {
-        // en esta version no se perderan ni vidas ni bombas.
+        // ALTOZANO - en esta version no se perderan ni vidas ni bombas.
+        // LoadSaveService.saveCurrentGame(0, score, stage, 3);
         LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
         generateHeartsLifes();
         updateCanvas();

@@ -33,6 +33,9 @@ public class MusicController : MonoBehaviour
 
     public void muteChange( bool mute){
         audioSource.mute = mute;
+        
+        LoadSaveService.game.isMute = mute;
+        LoadSaveService.savePlayerLocal();
     }
 
     public void playSong(string song)
