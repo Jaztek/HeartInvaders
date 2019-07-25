@@ -19,26 +19,27 @@ public class FriendPanelController : MonoBehaviour
     {
         cleanChilds(friendTable);
         List<FriendModel> listFriends = LoadSaveService.game.onlineModel.listFriends;
-        List<PlayerModel> friendsRequest = new List<PlayerModel>();
+        int pos = 1;
         if (listFriends.Count > 0)
         {
-            List<string> listDeviceId = listFriends.Select(f => f.deviceId).ToList();
-            List<PlayerModel> friends = PlayerService.getUsersByIds(listDeviceId);
+            List<FriendModel> friendsModelOK = listFriends.Where(f => f.status == "OK").ToList();
 
-            friends.Add(LoadSaveService.game.playerModel);
-            friends.Sort((friend1, friend2) => friend2.maxScore.CompareTo(friend1.maxScore));
-            string idPlayer = LoadSaveService.game.playerModel.deviceId;
-
-            int pos = 1;
-            friends.ForEach(fr =>
+            if (friendsModelOK.Count > 0)
             {
-                FriendModel frModel = new FriendModel();
-                if(fr.deviceId != idPlayer){
-                    frModel = listFriends.Find(onlinefr =>  onlinefr.deviceId == fr.deviceId );
-                }
+                List<string> listDeviceIdOK = friendsModelOK.Select(f => f.deviceId).ToList();
+                List<PlayerModel> friendsOK = PlayerService.getUsersByIds(listDeviceIdOK);
 
-                if (frModel.status == null || frModel.status != "Request")
+                friendsOK.Add(LoadSaveService.game.playerModel);
+                friendsOK.Sort((friend1, friend2) => friend2.maxScore.CompareTo(friend1.maxScore));
+                string idPlayer = LoadSaveService.game.playerModel.deviceId;
+
+                friendsOK.ForEach(fr =>
                 {
+                    FriendModel frModel = new FriendModel();
+                    if (fr.deviceId != idPlayer)
+                    {
+                        frModel = listFriends.Find(onlinefr => onlinefr.deviceId == fr.deviceId);
+                    }
 
                     GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
                     GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
@@ -47,18 +48,17 @@ public class FriendPanelController : MonoBehaviour
                     bool isPlayer = fr.deviceId == idPlayer ? true : false;
                     panelFriend.GetComponent<FriendSingle>().setFriend(pos, fr.name, fr.maxScore.ToString(), isPlayer);
                     pos++;
-                }
-                else
-                {
-                    friendsRequest.Add(fr);
-                }
-            });
+                });
+            }
 
-            if (friendsRequest.Count > 0)
+            List<FriendModel> friendsModelRequest = listFriends.Where(f => f.status == "Request").ToList();
+            if (friendsModelRequest.Count > 0)
             {
                 friendRequestPanel.SetActive(true);
                 cleanChilds(friendRequestTable);
 
+                List<string> listDeviceIdRequest = listFriends.Select(f => f.deviceId).ToList();
+                List<PlayerModel> friendsRequest = PlayerService.getUsersByIds(listDeviceIdRequest);
                 friendsRequest.ForEach(frR =>
                 {
                     GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendRSingle", typeof(GameObject));
@@ -69,6 +69,15 @@ public class FriendPanelController : MonoBehaviour
             } else {
                  friendRequestPanel.SetActive(false);
             }
+        } else
+        {
+            PlayerModel me = LoadSaveService.game.playerModel;
+
+            GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
+            GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
+            panelFriend.transform.SetParent(friendTable.transform);
+
+            panelFriend.GetComponent<FriendSingle>().setFriend(pos, me.name, me.maxScore.ToString(), true);
         }
     }
 
