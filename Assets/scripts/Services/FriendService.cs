@@ -27,7 +27,6 @@ public class FriendService
                     var where = new QueryDocument("deviceId", friend.deviceId);
                     OnlineModel friendOnlineModel = QueryMaster.onlineModel.FindOne(where);
                     friendOnlineModel.listFriends.Add(me);
-                    friendOnlineModel.pendingFriends = true;
                     QueryMaster.onlineModel.Save(friendOnlineModel);
 
                     FirebaseController.sendMessageRequestFriend(friendPlayerModel.token);

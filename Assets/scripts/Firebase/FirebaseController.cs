@@ -38,13 +38,8 @@ public static class FirebaseController
 
     private static void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
     {
-        if (e.Message.Notification.Title.Contains("friend request"))
-        {
-            Task.Run(() =>
-            {
-                LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
-            });
-        }
+        UnityEngine.Debug.Log("Message received");
+        LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
     }
 
     public static void sendMessageScoreTo(string tokenPerdedor, long score, string nombreGanador)
