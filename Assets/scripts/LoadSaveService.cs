@@ -118,9 +118,10 @@ public static class LoadSaveService
         return onlineModel;
     }
 
-    public static void saveCurrentGame(int lifesLost, long score, int stage, int bombs)
+    public static void saveCurrentGame(int lifesLost, long score, int stage, int bombs, int nextStage)
     {
         game.lifes = game.lifes - lifesLost;
+        game.nextStage = nextStage;
         game.maxStage = game.maxStage < stage ? stage : game.maxStage;
         game.bombs = bombs;
 

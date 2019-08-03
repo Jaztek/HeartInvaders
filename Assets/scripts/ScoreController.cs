@@ -14,9 +14,10 @@ public class ScoreController : MonoBehaviour, IPointerClickHandler
 
     public void start()
     {
-        StartCoroutine("counter");
+        //StartCoroutine("counter");
     }
 
+/*
     IEnumerator counter()
     {
         for (; ; )
@@ -25,6 +26,7 @@ public class ScoreController : MonoBehaviour, IPointerClickHandler
             yield return new WaitForSeconds(vel);
         }
     }
+ */
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
@@ -37,6 +39,11 @@ public class ScoreController : MonoBehaviour, IPointerClickHandler
 
     public long getScore(){
         return count;
+    }
+
+     public void setScoreTo(long score){
+        count = score;
+        this.GetComponent<Text>().text = (count).ToString("0000000");
     }
 
     public void restartScore(){

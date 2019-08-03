@@ -33,12 +33,13 @@ public class GameController : MonoBehaviour
     private bool gameOver = true;
     private StageModel currentStage;
     private StagesList stages;
+    private int nextStage;
 
 
     void Start()
     {
         scoreController = score.GetComponentInChildren<ScoreController>();
-        getStagesPlattform();
+       // getStagesPlattform();
     }
 
 
@@ -115,19 +116,24 @@ public class GameController : MonoBehaviour
         music.stopMusic();
         popup.SetActive(true);
         tutoCanvas.SetActive(false);
-        popup.GetComponent<PopupScore>().setData(scoreController.getScore(), currentStage.stage);
+
+        nextStage = UtilsStage.calcNextStage(currentStage.stage);
+        bool newRecord = false;
 
         if (player.getGameModel() != null && scoreController.getScore() > player.getGameModel().playerModel.maxScore) {
             music.playSong("victoria");
+            newRecord = true;
         } else if (player.getGameModel() != null) {
             music.playSong("gameOver");
         }
+
+        popup.GetComponent<PopupScore>().setData(scoreController.getScore(), currentStage.stage, nextStage, newRecord);
     }
-    public void restart()
+    public void restart(int savedStage)
     {
-        loadStage();
+        nextStage = 0;
+        loadStage(savedStage);
         heart.GetComponent<Heart>().restart();
-        scoreController.restartScore();
         bombs.setBombs(player.getBombs());
 
         StartCoroutine("delayStartGame");
@@ -149,22 +155,27 @@ public class GameController : MonoBehaviour
 
     }
 
+/*
     public void getStagesPlattform()
     {
-        loadStage();
+        //loadStage();
     }
+ */
 
-    public void loadStage()
+    public void loadStage(int savedStage)
     {
         stages = StageService.getStages();
-        currentStage = stages.stagesList[0];
+        currentStage = stages.stagesList[savedStage];
+
+        long actualScore = currentStage.stage != 0 ? stages.stagesList[savedStage-1].maxScore : 0;
+        scoreController.setScoreTo(actualScore);
 
     }
 
     public void backToMenu()
     {
         heart.GetComponent<Heart>().restart();
-        main.backToMenu(scoreController.getScore(), currentStage.stage);
+        main.backToMenu(scoreController.getScore(), currentStage.stage, nextStage);
     }
 
     public void changeStage(StageModel stage)

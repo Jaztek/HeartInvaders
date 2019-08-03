@@ -7,7 +7,6 @@ public static class UtilsLifeCalc
 
     public static void calcLifes()
     {
-        UnityEngine.Debug.Log("entra");
         int currentLifes = LoadSaveService.game.lifes;
         DateTime dateLast = LoadSaveService.game.dateLastLife;
 

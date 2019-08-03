@@ -35,4 +35,22 @@ public static class UtilsStage
 
         return progresStage;
     }
+
+    public static int calcNextStage(int currentStage) {
+       
+       int nextStage = 0;
+        for (nextStage = currentStage - 2; nextStage % 5 != 1; nextStage--)
+        {
+            if(nextStage % 5 == 1){
+                break;
+            }
+            if(nextStage < 0){
+                nextStage = 0;
+                 break;
+            }
+        }
+
+        return nextStage;
+    }
+
 }

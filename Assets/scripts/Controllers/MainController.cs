@@ -79,12 +79,12 @@ public class MainController : MonoBehaviour
         lifeHeartContainer.SetActive(false);
         game.activeBarreras(true);
 
-        game.restart();
+        game.restart(player.getGameModel().nextStage);
     }
 
     public void restartMenu()
     {
-        game.setGameOver();
+       // game.setGameOver();
         music.playSong("casaAsteroide");
         mainCanvas.SetActive(true);
         gameCanvas.SetActive(false);
@@ -100,11 +100,11 @@ public class MainController : MonoBehaviour
         textScore.GetComponent<Text>().text = LoadSaveService.game.playerModel.maxScore.ToString("0000000");
     }
 
-    public void backToMenu(long score, int stage)
+    public void backToMenu(long score, int stage, int nextStage)
     {
         // ALTOZANO - en esta version no se perderan ni vidas ni bombas.
         // LoadSaveService.saveCurrentGame(0, score, stage, 3);
-        LoadSaveService.saveCurrentGame(1, score, stage, player.getBombs());
+        LoadSaveService.saveCurrentGame(1, score, stage, 3, nextStage);
         generateHeartsLifes();
         updateCanvas();
         restartMenu();
