@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: TravStudios
   productName: 'Heart Beat: Defender'
-  defaultCursor: {fileID: 2800000, guid: f4d90b46f0961be4ca7f434b9e28354c, type: 3}
+  defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -42,9 +42,10 @@ PlayerSettings:
   m_SplashScreenLogos:
   - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
     duration: 2.039
-  - logo: {fileID: 21300000, guid: a33c9d306313f2d41819645b36d38849, type: 3}
+  - logo: {fileID: 21300000, guid: 8a97470b95e0a6540bcaf187ce91d9ef, type: 3}
     duration: 3
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 8a97470b95e0a6540bcaf187ce91d9ef,
+    type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
@@ -123,7 +124,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0.4
+  bundleVersion: 1.0.6
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -167,7 +168,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.travstudios.heartbeatdefender
   buildNumber: {}
-  AndroidBundleVersionCode: 5
+  AndroidBundleVersionCode: 7
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -263,7 +264,7 @@ PlayerSettings:
   AndroidKeystoreName: '{inproject}: keyStoreHBD.keystore'
   AndroidKeyaliasName: hb defender
   AndroidBuildApkPerCpuArchitecture: 0
-  AndroidTVCompatibility: 1
+  AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1

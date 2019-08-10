@@ -47,6 +47,7 @@ public class FriendPanelController : MonoBehaviour
 
                     bool isPlayer = fr.deviceId == idPlayer ? true : false;
                     panelFriend.GetComponent<FriendSingle>().setFriend(pos, fr.name, fr.maxScore.ToString(), isPlayer);
+                    panelFriend.transform.localScale = new Vector3(1, 1, 1);
                     pos++;
                 });
             }
@@ -64,6 +65,7 @@ public class FriendPanelController : MonoBehaviour
                     GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendRSingle", typeof(GameObject));
                     GameObject panelFriendR = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
                     panelFriendR.transform.SetParent(friendRequestTable.transform);
+                    panelFriendR.transform.localScale = new Vector3(1, 1, 1);
                     panelFriendR.GetComponent<FriendRSingle>().setFriend(frR.deviceId, frR.name, frR.maxScore.ToString());
                 });
             } else {
@@ -76,6 +78,7 @@ public class FriendPanelController : MonoBehaviour
             GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendPanel", typeof(GameObject));
             GameObject panelFriend = Instantiate(variableForPrefab, Vector2.zero, this.transform.rotation);
             panelFriend.transform.SetParent(friendTable.transform);
+             panelFriend.transform.localScale = new Vector3(1, 1, 1);
 
             panelFriend.GetComponent<FriendSingle>().setFriend(pos, me.name, me.maxScore.ToString(), true);
         }

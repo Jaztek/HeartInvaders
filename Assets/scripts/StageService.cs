@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public static class StageService
@@ -29,11 +30,11 @@ public static class StageService
         string dataAsJson;
         if (filePath.Contains("://") || filePath.Contains(":///"))
         {
-            WWW reader = new WWW(filePath);
+            UnityWebRequest reader = new UnityWebRequest (filePath);
             while (!reader.isDone)
             {
             }
-            dataAsJson = reader.text;
+            dataAsJson = reader.downloadHandler.text;
         }
         else
         {
