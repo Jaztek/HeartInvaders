@@ -5,10 +5,9 @@ public class QueryMaster
 {
 
     private static MongoClient client = new MongoClient("mongodb://userunity:userunity123@ds261096.mlab.com:61096/heart");
-    private static MongoServer server = client.GetServer();
-    public static MongoDatabase db = server.GetDatabase("heart");
-    public static MongoCollection<PlayerModel> playerModel;
-    public static MongoCollection<OnlineModel> onlineModel;
+    public static IMongoDatabase db = client.GetDatabase("heart");
+    public static IMongoCollection<PlayerModel> playerModel;
+    public static IMongoCollection<OnlineModel> onlineModel;
 
     public static bool isOnline()
     {

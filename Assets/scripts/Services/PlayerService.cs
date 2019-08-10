@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using MongoDB.Driver;
-using MongoDB.Driver.Builders;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,8 +14,8 @@ public class PlayerService
             return null;
         }
         QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        var where = new QueryDocument("name", name);
-        return QueryMaster.playerModel.FindOne(where);
+        QueryMaster.playerModel.Find(user => user.name.Equals(name)).SingleOrDefault();
+        return QueryMaster.playerModel.Find(user => user.name.Equals(name)).SingleOrDefault();
     }
 
     public static PlayerModel getUserById(string deviceId)
@@ -27,8 +26,7 @@ public class PlayerService
             return null;
         }
         QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        var where = new QueryDocument("deviceId", deviceId);
-        return QueryMaster.playerModel.FindOne(where);
+        return QueryMaster.playerModel.Find(user => user.deviceId.Equals(deviceId)).SingleOrDefault();
     }
 
     public static List<PlayerModel> getUsersByIds(List<string> listDeviceId)
@@ -38,12 +36,9 @@ public class PlayerService
             UnityEngine.Debug.LogError("Sin conexión a BBDD");
             return null;
         }
-        List<BsonValue> listBson = new List<BsonValue>();
-        listDeviceId.ForEach(d => listBson.Add(BsonValue.Create(d)));
 
         QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        var where = Query.In("deviceId", listBson);
-        return QueryMaster.playerModel.Find(where).ToList();
+        return QueryMaster.playerModel.Find(user => listDeviceId.Contains(user.deviceId)).ToList();
     }
 
     public static void savePlayer()
@@ -57,7 +52,7 @@ public class PlayerService
             else
             {
                 QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-                QueryMaster.playerModel.Save(LoadSaveService.game.playerModel);
+                QueryMaster.playerModel.InsertOne(LoadSaveService.game.playerModel);
             }
         });
     }
@@ -70,8 +65,6 @@ public class PlayerService
             return null;
         }
         QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-
-        var where = new QueryDocument("deviceId", SystemInfo.deviceUniqueIdentifier);
-        return QueryMaster.playerModel.FindOne(where);
+        return QueryMaster.playerModel.Find(user => user.deviceId.Equals(SystemInfo.deviceUniqueIdentifier)).SingleOrDefault();
     }
 }
