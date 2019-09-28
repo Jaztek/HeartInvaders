@@ -1,11 +1,18 @@
 fileFormatVersion: 2
-guid: 30f4d0eb77704ba68bf8dede64390643
+guid: 69dc166c742b4e84b9cbb3b2c2980a2e
 labels:
 - gvh
 - gvh_rename_to_disable
-- gvh_targets-windows-windows64-osx-osxintel-osxintel64-linux-linux32-linux64
-- gvh_version-6.0.0
-TextScriptImporter:
+- gvh_targets-linux
+- gvh_targets-linux32
+- gvh_targets-linux64
+- gvh_targets-osx
+- gvh_targets-osxintel
+- gvh_targets-osxintel64
+- gvh_targets-windows
+- gvh_targets-windows64
+- gvh_version-6.5.0
+DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 

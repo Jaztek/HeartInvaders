@@ -1,8 +1,37 @@
-﻿using MongoDB.Driver;
+﻿using System.Threading.Tasks;
+
+using UnityEngine;
+using Firebase;
+using Firebase.Database;
+
 using System;
-using System.Net.Sockets;
+using System.Threading;
+
 public class QueryMaster
 {
+    private static int TIMEOUT_SECONDS = 30;
+
+    public static void makeAsincToSinc(Task task){
+
+        DateTime startTime = DateTime.Now;
+        while (!task.IsCompleted)
+        {
+            // Check if we are waiting too long o
+            if ((DateTime.Now - startTime).TotalSeconds > TIMEOUT_SECONDS)
+            {
+                throw new TimeoutException();
+            }
+            // Check if a cancelation has been requested
+            //cancellationToken.ThrowIfCancellationRequested();
+
+            // Wait a bit more
+            Thread.Sleep(100);
+        }
+        
+        ;
+    }
+
+/*
 
     private static MongoClient client = new MongoClient("mongodb://userunity:userunity123@ds261096.mlab.com:61096/heart");
     public static IMongoDatabase db = client.GetDatabase("heart");
@@ -37,4 +66,5 @@ public class QueryMaster
             return false;
         }
     }
+ */
 }

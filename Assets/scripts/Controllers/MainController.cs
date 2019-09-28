@@ -25,9 +25,6 @@ public class MainController : MonoBehaviour
     [Header("Game Objects")]
     public GameObject lifeHeartContainer;
 
-    // private GameController game;
-    //private Home
-    // Use this for initialization
     void Start()
     {
         LoadSaveService.Load();
@@ -45,10 +42,11 @@ public class MainController : MonoBehaviour
         FirebaseController.start();
         AdmobController.start();
     }
+ 
 
     public void generateHeartsLifes()
     {
-         UtilsLifeCalc.calcLifes();
+        UtilsLifeCalc.calcLifes();
         foreach (Transform child in lifeHeartContainer.transform)
         {
             GameObject.Destroy(child.gameObject);

@@ -23,7 +23,8 @@ public class SearchFriend : MonoBehaviour
         {
             ErrorText.gameObject.SetActive(false);
 
-            PlayerModel player = PlayerService.getUserByNick(nick);
+            PlayerModel player = null;
+            //PlayerService.getUserByNick(nick);
 
 
             if (player == null)
@@ -33,7 +34,7 @@ public class SearchFriend : MonoBehaviour
             }
             else
             {
-                FriendService.requestFriend(nick);
+                //FriendService.requestFriend(nick);
                 refreshFriendList();
                 this.gameObject.SetActive(false);
             }

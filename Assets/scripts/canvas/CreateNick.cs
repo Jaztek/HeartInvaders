@@ -1,23 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+using System.Collections;
 
 public class CreateNick : MonoBehaviour
 {
 
     public InputField input;
     public Text ErrorText;
-    // Start is called before the first frame update
-    void Start()
+
+    void OnEnable()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        // PlayerService.setUserCache();
     }
 
     public void checkNick()
@@ -27,19 +21,32 @@ public class CreateNick : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(nick))
         {
             ErrorText.gameObject.SetActive(false);
+            Task task = PlayerService.getPlayerByNickTask(nick);
 
-            PlayerModel player = PlayerService.getUserByNick(nick);
+            StartCoroutine(login(task, nick));
 
+        }
+    }
 
-            if (player != null)
-            {
-                UnityEngine.Debug.LogError("Nick ya existe");
-                ErrorText.gameObject.SetActive(true);
-            }
-            else
-            {
-                LoadSaveService.saveNick(nick);
+    public IEnumerator login(Task task, string nick)
+    {
+        while (task.IsCompleted == false)
+        {
+            yield return null;
+        }
+        if (task.IsFaulted)
+        {
+            Debug.Log("IsFaulted");
+            throw task.Exception;
+        }
+        if (task.IsCompleted)
+        {
+            Task<PlayerModel> user = ((Task<PlayerModel>)task);
+            if(user.Result == null){
                 this.gameObject.SetActive(false);
+                LoadSaveService.saveNick(nick);
+            } else {
+                ErrorText.gameObject.SetActive(true);
             }
         }
     }

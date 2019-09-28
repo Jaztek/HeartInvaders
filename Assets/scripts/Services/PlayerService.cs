@@ -1,70 +1,106 @@
-﻿using UnityEngine;
-using MongoDB.Driver;
-using System.Linq;
-using System.Collections.Generic;
+﻿
+using UnityEngine;
 using System.Threading.Tasks;
-using MongoDB.Bson;
+using Firebase.Database;
+
+
 public class PlayerService
 {
-    public static PlayerModel getUserByNick(string name)
-    {
-        if (!QueryMaster.isOnline())
-        {
-            UnityEngine.Debug.LogError("Sin conexión a BBDD");
-            return null;
-        }
-        QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        QueryMaster.playerModel.Find(user => user.name.Equals(name)).SingleOrDefault();
-        return QueryMaster.playerModel.Find(user => user.name.Equals(name)).SingleOrDefault();
-    }
+    public static DBStruct<PlayerModel> playerTable;
+    public const string UsersTablePath = "Users/";
 
-    public static PlayerModel getUserById(string deviceId)
-    {
-        if (!QueryMaster.isOnline())
-        {
-            UnityEngine.Debug.LogError("Sin conexión a BBDD");
-            return null;
-        }
-        QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        return QueryMaster.playerModel.Find(user => user.deviceId.Equals(deviceId)).SingleOrDefault();
-    }
 
-    public static List<PlayerModel> getUsersByIds(List<string> listDeviceId)
-    {
-        if (!QueryMaster.isOnline())
-        {
-            UnityEngine.Debug.LogError("Sin conexión a BBDD");
-            return null;
-        }
-
-        QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        return QueryMaster.playerModel.Find(user => listDeviceId.Contains(user.deviceId)).ToList();
-    }
 
     public static void savePlayer()
     {
         Task.Run(() =>
         {
-            if (!QueryMaster.isOnline())
+            Debug.Log(LoadSaveService.game.playerModel.name);
+            PlayerModel player = LoadSaveService.game.playerModel;
+
+            string usersPath = UsersTablePath + player.deviceId;
+            DBStruct<PlayerModel> dbPlayer = new DBStruct<PlayerModel>(usersPath, CommonData.app);
+            dbPlayer.Initialize(player);
+            dbPlayer.PushData();
+        });
+
+    }
+
+    public static Task getPlayerByNickTask(string name)
+    {
+        PlayerModel user = null;
+        return FirebaseDatabase.DefaultInstance.RootReference.Child("Users").OrderByChild("name").EqualTo(name)
+        .GetValueAsync().ContinueWith(taski =>
+        {
+            if (taski.IsFaulted)
             {
-                UnityEngine.Debug.LogError("Sin conexión a BBDD");
+                // Handle the error...
             }
-            else
+            if (taski.IsCompleted)
             {
-                QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-                QueryMaster.playerModel.InsertOne(LoadSaveService.game.playerModel);
-            }
+                DataSnapshot snapshot = taski.Result;
+                Debug.Log("busqueda ->");
+
+                foreach (DataSnapshot children in snapshot.Children)
+                {
+                    user = JsonUtility.FromJson<PlayerModel>(children.GetRawJsonValue());
+                }
+            };
+            return user;
         });
     }
 
-    public static PlayerModel LoadPlayer()
+    // public static PlayerModel getUserById(string deviceId)
+    //  {
+    // QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
+    // return QueryMaster.playerModel.Find(user => user.deviceId.Equals(deviceId)).SingleOrDefault();
+    //  }
+    /*
+
+       public static List<PlayerModel> getUsersByIds(List<string> listDeviceId)
+       {
+           if (!QueryMaster.isOnline())
+           {
+               UnityEngine.Debug.LogError("Sin conexión a BBDD");
+               return null;
+           }
+
+           QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
+           return QueryMaster.playerModel.Find(user => listDeviceId.Contains(user.deviceId)).ToList();
+       }
+
+      
+
+    */
+    public static Task<PlayerModel> LoadPlayer()
     {
-        if (!QueryMaster.isOnline())
+        // QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
+        // return QueryMaster.playerModel.Find(user => user.deviceId.Equals(SystemInfo.deviceUniqueIdentifier)).SingleOrDefault();
+        PlayerModel user = null;
+        return FirebaseDatabase.DefaultInstance.RootReference.Child("Users").OrderByChild("deviceId").EqualTo(SystemInfo.deviceUniqueIdentifier)
+        .GetValueAsync().ContinueWith(taski =>
         {
-            UnityEngine.Debug.LogError("Sin conexión a BBDD");
-            return null;
-        }
-        QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
-        return QueryMaster.playerModel.Find(user => user.deviceId.Equals(SystemInfo.deviceUniqueIdentifier)).SingleOrDefault();
+            if (taski.IsFaulted)
+            {
+                Debug.Log("fasho");
+            }
+            if (taski.IsCompleted)
+            {
+                DataSnapshot snapshot = taski.Result;
+                foreach (DataSnapshot children in snapshot.Children)
+                {
+                    user = JsonUtility.FromJson<PlayerModel>(children.GetRawJsonValue());
+                }
+                if (user == null)
+                {
+                    user = new PlayerModel();
+                    user.deviceId = SystemInfo.deviceUniqueIdentifier;
+                    user.maxScore = 0;
+                }
+                Debug.Log(user.name);
+            };
+            return user;
+        });
     }
 }
+

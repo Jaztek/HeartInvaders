@@ -27,7 +27,8 @@ public class FriendPanelController : MonoBehaviour
             if (friendsModelOK.Count > 0)
             {
                 List<string> listDeviceIdOK = friendsModelOK.Select(f => f.deviceId).ToList();
-                List<PlayerModel> friendsOK = PlayerService.getUsersByIds(listDeviceIdOK);
+                List<PlayerModel> friendsOK = null;
+                //PlayerService.getUsersByIds(listDeviceIdOK);
 
                 friendsOK.Add(LoadSaveService.game.playerModel);
                 friendsOK.Sort((friend1, friend2) => friend2.maxScore.CompareTo(friend1.maxScore));
@@ -59,7 +60,8 @@ public class FriendPanelController : MonoBehaviour
                 cleanChilds(friendRequestTable);
 
                 List<string> listDeviceIdRequest = listFriends.Select(f => f.deviceId).ToList();
-                List<PlayerModel> friendsRequest = PlayerService.getUsersByIds(listDeviceIdRequest);
+                List<PlayerModel> friendsRequest = null;
+                //PlayerService.getUsersByIds(listDeviceIdRequest);
                 friendsRequest.ForEach(frR =>
                 {
                     GameObject variableForPrefab = (GameObject)Resources.Load("Prefabs/Canvas/FriendRSingle", typeof(GameObject));

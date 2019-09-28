@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
@@ -36,7 +37,7 @@ public static class LoadSaveService
     }
 
 
-    public static void Load()
+    public async static void Load()
     {
         /*
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
@@ -44,7 +45,7 @@ public static class LoadSaveService
             File.Delete(Application.persistentDataPath + "/savedGames.gd");
         }
          */
-         
+
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
             try
@@ -57,7 +58,12 @@ public static class LoadSaveService
 
                 game = gameModel;
 
-                if (game.playerModel == null) {  game.playerModel = getPlayerModel();}
+                if (game.playerModel == null)
+                {
+                    Task<PlayerModel> taskPlayer = getPlayerModel();
+                    await taskPlayer;
+                    game.playerModel = taskPlayer.Result;
+                }
 
                 game.onlineModel = getOnlineModel();
                 savePlayerLocal();
@@ -76,7 +82,7 @@ public static class LoadSaveService
         }
     }
 
-    private static void createNewPlayer()
+    private async static void createNewPlayer()
     {
         game = new GameModel();
         game.lifes = 10;
@@ -85,36 +91,46 @@ public static class LoadSaveService
 
         game.nextStage = 0;
         game.isMute = false;
-        game.dateLastLife  = DateTime.Now;
+        game.dateLastLife = DateTime.Now;
 
-        game.playerModel = getPlayerModel();
-        game.onlineModel = getOnlineModel();
+        Task<PlayerModel> taskPlayer = getPlayerModel();
+        await taskPlayer;
+        game.playerModel = taskPlayer.Result;
+
+        Task<OnlineModel> taskOnlineModel = getOnlineModel();
+        await taskOnlineModel;
+        game.onlineModel = taskOnlineModel.Result;
+
         savePlayerLocal();
     }
 
-    private static PlayerModel getPlayerModel()
+    private static Task<PlayerModel> getPlayerModel()
     {
-        PlayerModel playerModel = PlayerService.LoadPlayer();
-
-        if (playerModel == null)
-        {
-            playerModel = new PlayerModel();
-            playerModel.deviceId = SystemInfo.deviceUniqueIdentifier;
-            playerModel.maxScore = 0;
-        }
-        return playerModel;
+        Task<PlayerModel> taskPlayer = PlayerService.LoadPlayer();
+        return taskPlayer;
     }
 
-    public static OnlineModel getOnlineModel()
+    public async static Task<OnlineModel> getOnlineModel()
     {
-        OnlineModel onlineModel = FriendService.getFriends(SystemInfo.deviceUniqueIdentifier);
+        Task<OnlineModel> taskOnlineModel = FriendService.getFriends(SystemInfo.deviceUniqueIdentifier);
 
-        if (onlineModel == null)
-        {
-            onlineModel = new OnlineModel();
-            onlineModel.deviceId = SystemInfo.deviceUniqueIdentifier;
-            onlineModel.listFriends = new List<FriendModel>();
-        }
+
+        Task<PlayerModel> taskOnlineModel = getPlayerModel();
+        await taskOnlineModel;
+        game.playerModel = taskPlayer.Result;
+
+        // if (onlineModel == null) {
+        OnlineModel onlineModel = new OnlineModel();
+        onlineModel.deviceId = SystemInfo.deviceUniqueIdentifier;
+        /*
+         */
+        FriendModel friend = new FriendModel();
+        friend.deviceId = "wefwefwef";
+        friend.status = "Pendiente";
+        List<FriendModel> friends = new List<FriendModel>();
+        friends.Add(friend);
+        // onlineModel.listFriends = friends;
+        // }
         return onlineModel;
     }
 
@@ -134,11 +150,13 @@ public static class LoadSaveService
                 {
                     if (f.status != "Pending")
                     {
+                        /*
                         PlayerModel friend = PlayerService.getUserById(f.deviceId);
                         if(friend.maxScore > maxScore && friend.maxScore < score)
                         {
                             FirebaseController.sendMessageScoreTo(friend.token, score, game.playerModel.name);
                         }
+                         */
                     }
                 });
             });
@@ -151,7 +169,8 @@ public static class LoadSaveService
         }
     }
 
-    public static void saveNick(string nick){
+    public static void saveNick(string nick)
+    {
 
         game.playerModel.name = nick;
         LoadSaveService.saveGameRemote();

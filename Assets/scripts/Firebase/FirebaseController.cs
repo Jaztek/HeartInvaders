@@ -3,6 +3,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using Firebase;
+using Firebase.Unity.Editor;
 
 public static class FirebaseController
 {
@@ -17,6 +19,7 @@ public static class FirebaseController
                 Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
                 Firebase.Messaging.FirebaseMessaging.MessageReceived += OnMessageReceived;
 
+               
             }
             else
             {
@@ -25,6 +28,25 @@ public static class FirebaseController
                 // Firebase Unity SDK is not safe to use here.
             }
         });
+
+        // inicializamos la base de datos de firebase.
+        Debug.Log("firebaseInitialized  firebaseInitialized");
+        //FirebaseApp app = FirebaseApp.DefaultInstance;
+
+
+        Firebase.AppOptions ops = new Firebase.AppOptions();
+        CommonData.app = Firebase.FirebaseApp.Create(ops);
+
+        // Setup database url when running in the editor 
+        #if UNITY_EDITOR
+                if (CommonData.app.Options.DatabaseUrl == null)
+                {
+                    Debug.Log("https://heart-beat-defender.firebaseio.com/");
+                    CommonData.app.SetEditorDatabaseUrl("https://heart-beat-defender.firebaseio.com/");
+                }
+        #endif
+
+
     }
 
     private static void OnTokenReceived(object sender, Firebase.Messaging.TokenReceivedEventArgs token)
@@ -39,7 +61,7 @@ public static class FirebaseController
     private static void OnMessageReceived(object sender, Firebase.Messaging.MessageReceivedEventArgs e)
     {
         UnityEngine.Debug.Log("Message received");
-        LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
+        //LoadSaveService.game.onlineModel = FriendService.getFriends(LoadSaveService.game.onlineModel.deviceId);
     }
 
     public static void sendMessageScoreTo(string tokenPerdedor, long score, string nombreGanador)

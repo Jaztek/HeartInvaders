@@ -20,9 +20,9 @@ public class FriendRSingle : MonoBehaviour
 
     public void acceptDeclineFriend(bool isAccept){
         if(isAccept){
-            FriendService.acceptFriend(friendDeviceID);
+           // FriendService.acceptFriend(friendDeviceID);
         } else {
-            FriendService.rejectedFriend(friendDeviceID);
+          //  FriendService.rejectedFriend(friendDeviceID);
         }
          GameObject.Find("FriendsCanvas").GetComponent<FriendPanelController>().refreshFriendList();
          Destroy(this.gameObject);
