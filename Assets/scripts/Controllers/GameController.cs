@@ -136,7 +136,9 @@ public class GameController : MonoBehaviour
         heart.GetComponent<Heart>().restart();
         bombs.setBombs(player.getBombs());
 
-        StartCoroutine("delayStartGame");
+        gameOver = false;
+        changeStage(currentStage);
+       // StartCoroutine("delayStartGame");
         if (currentStage.stage == 0)
         {
             tutoCanvas.SetActive(true);
@@ -154,13 +156,6 @@ public class GameController : MonoBehaviour
         }
 
     }
-
-/*
-    public void getStagesPlattform()
-    {
-        //loadStage();
-    }
- */
 
     public void loadStage(int savedStage)
     {

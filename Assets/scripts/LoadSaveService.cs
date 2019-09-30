@@ -37,7 +37,7 @@ public static class LoadSaveService
     }
 
 
-    public async static void Load()
+    public async static Task Load()
     {
         /*
         if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
@@ -45,9 +45,7 @@ public static class LoadSaveService
             File.Delete(Application.persistentDataPath + "/savedGames.gd");
         }
          */
-
-        if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
-        {
+        if (File.Exists(Application.persistentDataPath + "/savedGames.gd")){
             try
             {
                 BinaryFormatter bf = new BinaryFormatter();
@@ -58,31 +56,32 @@ public static class LoadSaveService
 
                 game = gameModel;
 
-                if (game.playerModel == null)
-                {
+                if (game.playerModel == null) {
                     Task<PlayerModel> taskPlayer = getPlayerModel();
                     await taskPlayer;
                     game.playerModel = taskPlayer.Result;
                 }
 
-                game.onlineModel = getOnlineModel();
+                Task<OnlineModel> taskOnlineModel = getOnlineModel();
+                await taskOnlineModel;
+                game.onlineModel = taskOnlineModel.Result;
                 savePlayerLocal();
 
                 UnityEngine.Debug.Log(gameModel.dateLastLife);
             }
             catch (System.Exception)
             {
-                createNewPlayer();
+                await createNewPlayer();
                 throw;
             }
         }
-        else
-        {
-            createNewPlayer();
+        else {
+            Debug.Log("crea player");
+            await createNewPlayer();
         }
     }
 
-    private async static void createNewPlayer()
+    private async static Task createNewPlayer()
     {
         game = new GameModel();
         game.lifes = 10;
@@ -93,8 +92,11 @@ public static class LoadSaveService
         game.isMute = false;
         game.dateLastLife = DateTime.Now;
 
-        Task<PlayerModel> taskPlayer = getPlayerModel();
+        Debug.Log("createNewPlayer");
+        Task<PlayerModel> taskPlayer = PlayerService.LoadPlayer(SystemInfo.deviceUniqueIdentifier);
         await taskPlayer;
+
+        Debug.Log("createNewPlayer" +taskPlayer.Result);
         game.playerModel = taskPlayer.Result;
 
         Task<OnlineModel> taskOnlineModel = getOnlineModel();
@@ -106,32 +108,15 @@ public static class LoadSaveService
 
     private static Task<PlayerModel> getPlayerModel()
     {
-        Task<PlayerModel> taskPlayer = PlayerService.LoadPlayer();
+        Task<PlayerModel> taskPlayer = PlayerService.LoadPlayer(SystemInfo.deviceUniqueIdentifier);
         return taskPlayer;
     }
 
-    public async static Task<OnlineModel> getOnlineModel()
+    public static Task<OnlineModel> getOnlineModel()
     {
         Task<OnlineModel> taskOnlineModel = FriendService.getFriends(SystemInfo.deviceUniqueIdentifier);
+        return taskOnlineModel;
 
-
-        Task<PlayerModel> taskOnlineModel = getPlayerModel();
-        await taskOnlineModel;
-        game.playerModel = taskPlayer.Result;
-
-        // if (onlineModel == null) {
-        OnlineModel onlineModel = new OnlineModel();
-        onlineModel.deviceId = SystemInfo.deviceUniqueIdentifier;
-        /*
-         */
-        FriendModel friend = new FriendModel();
-        friend.deviceId = "wefwefwef";
-        friend.status = "Pendiente";
-        List<FriendModel> friends = new List<FriendModel>();
-        friends.Add(friend);
-        // onlineModel.listFriends = friends;
-        // }
-        return onlineModel;
     }
 
     public static void saveCurrentGame(int lifesLost, long score, int stage, int bombs, int nextStage)

@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase.Database;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class FriendService
         });
     }
 
-    public static Task getFriends(string deviceId)
+    public static Task<OnlineModel> getFriends(string deviceId)
     {
         OnlineModel onlineModelFriend = null;
         return FirebaseDatabase.DefaultInstance.RootReference.Child("Friends").OrderByChild("deviceId").EqualTo(deviceId)
@@ -37,22 +38,16 @@ public class FriendService
                        DataSnapshot snapshot = taski.Result;
                        Debug.Log("busqueda ->");
 
-                       foreach (DataSnapshot children in snapshot.Children)
-                       {
-                           Debug.Log(children.GetRawJsonValue());
+                       foreach (DataSnapshot children in snapshot.Children) {
                            onlineModelFriend = JsonUtility.FromJson<OnlineModel>(children.GetRawJsonValue());
                        }
-                       /*
-                       if (onlineModelFriend != null)
-                       {
-                           onlineModelFriend.listFriends.Add(friend);
 
-                           DBStruct<OnlineModel> dbFriendFriend = new DBStruct<OnlineModel>(friendFrindPath, CommonData.app);
-                           string friendFrindPath = FriendsTablePath + friendPlayerModel.deviceId;
-                           dbFriend.Initialize(onlineModelFriend);
-                           dbFriend.PushData();
+                       if (onlineModelFriend == null) {
+                            onlineModelFriend = new OnlineModel();
+                            onlineModelFriend.deviceId = deviceId;
+                            List<FriendModel> friends = new List<FriendModel>();
+                            onlineModelFriend.listFriends = friends;
                        }
-                        */
                    };
                    return onlineModelFriend;
                });

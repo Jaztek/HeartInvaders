@@ -5148,7 +5148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb86178ed3cf26b4bb267de6acb43df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firebaseInitialized: 0
 --- !u!1001 &1021402729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9379,7 +9378,7 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 678028268}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

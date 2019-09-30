@@ -25,9 +25,8 @@ public class MainController : MonoBehaviour
     [Header("Game Objects")]
     public GameObject lifeHeartContainer;
 
-    void Start()
-    {
-        LoadSaveService.Load();
+    async void Start(){
+        await LoadSaveService.Load();
         muteCanvas.init();
         //si el jugador no tiene nombre, es porque es nuevo y debe crearselo.
         if (LoadSaveService.game.playerModel.name == null)

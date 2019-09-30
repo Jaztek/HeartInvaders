@@ -72,7 +72,7 @@ public class PlayerService
       
 
     */
-    public static Task<PlayerModel> LoadPlayer()
+    public static Task<PlayerModel> LoadPlayer(string idDevice)
     {
         // QueryMaster.playerModel = QueryMaster.db.GetCollection<PlayerModel>("users");
         // return QueryMaster.playerModel.Find(user => user.deviceId.Equals(SystemInfo.deviceUniqueIdentifier)).SingleOrDefault();
@@ -80,13 +80,15 @@ public class PlayerService
         return FirebaseDatabase.DefaultInstance.RootReference.Child("Users").OrderByChild("deviceId").EqualTo(SystemInfo.deviceUniqueIdentifier)
         .GetValueAsync().ContinueWith(taski =>
         {
-            if (taski.IsFaulted)
-            {
+            if (taski.IsFaulted) {
                 Debug.Log("fasho");
+                user = new PlayerModel();
+                user.deviceId = idDevice;
+                user.maxScore = 0;
             }
-            if (taski.IsCompleted)
-            {
+            if (taski.IsCompleted)  {
                 DataSnapshot snapshot = taski.Result;
+                Debug.Log("completa player" + snapshot.Children);
                 foreach (DataSnapshot children in snapshot.Children)
                 {
                     user = JsonUtility.FromJson<PlayerModel>(children.GetRawJsonValue());
@@ -94,7 +96,7 @@ public class PlayerService
                 if (user == null)
                 {
                     user = new PlayerModel();
-                    user.deviceId = SystemInfo.deviceUniqueIdentifier;
+                    user.deviceId = idDevice;
                     user.maxScore = 0;
                 }
                 Debug.Log(user.name);
